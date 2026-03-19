@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Planner</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: var(--tg-theme-bg-color, #ffffff);
+            --text-color: var(--tg-theme-text-color, #000000);
+            --hint-color: var(--tg-theme-hint-color, #999999);
+            --button-color: var(--tg-theme-button-color, #3390ec);
+            --button-text-color: var(--tg-theme-button-text-color, #ffffff);
+            --secondary-bg: var(--tg-theme-secondary-bg-color, #f4f4f5);
+            
+            --card-radius: 16px;
+            --item-radius: 12px;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            margin: 0;
+            padding: 20px 16px;
+            font-size: 16px;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: 700;
+            margin: 0 0 20px 0;
+            text-align: left;
+        }
+
+        /* Навигация */
+        .tabs {
+            display: flex;
+            background-color: rgba(128, 128, 128, 0.1); /* Полупрозрачный фон для контейнера табов */
+            padding: 4px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            backdrop-filter: blur(10px);
+        }
+
+        .tab-btn {
+            flex: 1;
+            background: none;
+            border: none;
+            color: var(--hint-color);
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 8px 0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .tab-btn.active {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            font-weight: 600;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+        .section.active {
+            display: block;
+        }
+
+        .task-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .task-item {
+            display: flex;
+            align-items: center;
+            background-color: var(--secondary-bg);
+            padding: 16px;
+            border-radius: var(--item-radius);
+            transition: var(--transition);
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .task-item:active {
+            transform: scale(0.98);
+            opacity: 0.8;
+        }
+
+        .task-item.completed {
+            opacity: 0.6;
+        }
+
+        .task-item.completed span {
+            text-decoration: line-through;
+            color: var(--hint-color);
+        }
+
+        .checkbox {
+            width: 24px;
+            height: 24px;
+            border: 2px solid var(--button-color);
+            border-radius: 50%;
+            margin-right: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: var(--transition);
+        }
+
+        .checkbox.checked {
+            background-color: var(--button-color);
+        }
+
+        .checkbox.checked::after {
+            content: '✓';
+            color: var(--button-text-color);
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .task-text {
+            flex-grow: 1;
+            font-size: 16px;
+            line-height: 1.4;
+        }
+
+        .add-task-form {
+            margin-top: 24px;
+            display: flex;
+            gap: 10px;
+        }
+
+        input[type="text"] {
+            flex-grow: 1;
+            background-color: var(--secondary-bg);
+            border: none;
+            color: var(--text-color);
+            padding: 14px 16px;
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 16px;
+            outline: none;
+        }
+
+        input[type="text"]:focus {
+            box-shadow: 0 0 0 2px rgba(128, 128, 128, 0.2);
+        }
+
+        /* --- ИЗМЕНЕННЫЕ СТИЛИ КНОПОК (Серые полупрозрачные) --- */
+        
+        .glass-btn {
+            background-color: rgba(128, 128, 128, 0.15); /* Светло-серый с прозрачностью */
+            color: var(--text-color);
+            border: 1px solid rgba(128, 128, 128, 0.1); /* Еле заметная граница */
+            backdrop-filter: blur(10px); /* Эффект размытия фона под кнопкой */
+            -webkit-backdrop-filter: blur(10px);
+            transition: var(--transition);
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: 500;
+        }
+
+        .glass-btn:active {
+            background-color: rgba(128, 128, 128, 0.25);
+            transform: scale(0.96);
+        }
+
+        /* Кнопка добавления (+) */
+        .add-btn {
+            width: 50px;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            border: none;
+        }
+
+        /* Кнопки настроения */
+        .mood-section {
+            margin-top: 30px;
+        }
+        
+        .mood-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--text-color);
+        }
+
+        .mood-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .mood-btn {
+            padding: 12px 8px;
+            border-radius: 12px;
+            text-align: center;
+            font-size: 13px;
+            /* Применяем класс glass-btn через JS или дублируем стили, здесь применим напрямую для простоты */
+            background-color: rgba(128, 128, 128, 0.15);
+            color: var(--text-color);
+            border: 1px solid rgba(128, 128, 128, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: var(--transition);
+        }
+
+        .mood-btn:active {
+            background-color: rgba(128, 128, 128, 0.25);
+        }
+
+        .mood-btn.selected {
+            background-color: rgba(128, 128, 128, 0.3); /* Чуть темнее при выборе */
+            border-color: rgba(128, 128, 128, 0.3);
+            font-weight: 600;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        /* Прогресс бар */
+        .progress-card {
+            margin-top: 30px;
+            background-color: rgba(128, 128, 128, 0.08); /* Очень легкий фон для карточки прогресса */
+            border-radius: var(--card-radius);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 1px solid rgba(128, 128, 128, 0.05);
+        }
+
+        .progress-wrapper {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin-bottom: 10px;
+        }
+
+        svg {
+            transform: rotate(-90deg);
+            width: 100%;
+            height: 100%;
+        }
+
+        circle {
+            fill: none;
+            stroke-width: 8;
+            stroke-linecap: round;
+        }
+
+        .circle-bg {
+            stroke: rgba(128, 128, 128, 0.15);
+        }
+
+        .circle-progress {
+            stroke: var(--button-color);
+            stroke-dasharray: 314; 
+            stroke-dashoffset: 314;
+            transition: stroke-dashoffset 1s ease-out;
+        }
+
+        .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-color);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Health Section */
+        .health-tip {
+            margin-top: 30px;
+            padding: 16px;
+            background-color: rgba(128, 128, 128, 0.08);
+            border-radius: var(--card-radius);
+            border: 1px solid rgba(128, 128, 128, 0.05);
+        }
+        .health-tip h3 {
+            margin: 0 0 8px 0;
+            font-size: 16px;
+            color: var(--text-color);
+            font-weight: 600;
+        }
+        .health-tip p {
+            margin: 0 0 12px 0;
+            font-size: 14px;
+            color: var(--hint-color);
+        }
+        .water-btn {
+            width: 100%;
+            padding: 12px;
+            /* Стиль стеклянной кнопки */
+            background-color: rgba(128, 128, 128, 0.15);
+            color: var(--text-color);
+            border: 1px solid rgba(128, 128, 128, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .water-btn:active {
+            background-color: rgba(128, 128, 128, 0.25);
+        }
+    </style>
+</head>
+<body>
+
+    <h1 id="greeting">Планировщик</h1>
+
+    <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('day')">День</button>
+        <button class="tab-btn" onclick="switchTab('week')">Неделя</button>
+        <button class="tab-btn" onclick="switchTab('month')">Месяц</button>
+    </div>
+
+    <!-- Секция Дня -->
+    <div id="day" class="section active">
+        <div class="task-list" id="task-list-day"></div>
+        
+        <div class="add-task-form">
+            <input type="text" id="new-task-day" placeholder="Новая задача...">
+            <button class="add-btn glass-btn" onclick="addTask('day')">+</button>
+        </div>
+
+        <div class="mood-section">
+            <div class="mood-title">Энергия дня</div>
+            <div class="mood-grid">
+                <button class="mood-btn" onclick="setMood(this, 'morning')">Утро ☀️</button>
+                <button class="mood-btn" onclick="setMood(this, 'day')">День ⚡</button>
+                <button class="mood-btn" onclick="setMood(this, 'evening')">Вечер 🌙</button>
+            </div>
+            <p id="mood-status" style="text-align: center; color: var(--hint-color); font-size: 13px; margin-top: 10px; min-height: 20px;"></p>
+        </div>
+
+        <div class="progress-card">
+            <div class="progress-wrapper">
+                <svg>
+                    <circle class="circle-bg" cx="60" cy="60" r="50"></circle>
+                    <circle class="circle-progress" id="progress-circle" cx="60" cy="60" r="50"></circle>
+                </svg>
+                <div class="progress-text" id="progress-percent">0%</div>
+            </div>
+            <div style="font-size: 14px; color: var(--hint-color); font-weight: 500;">Прогресс выполнения</div>
+        </div>
+    </div>
+
+    <!-- Заглушки для недели и месяца -->
+    <div id="week" class="section">
+        <div class="task-list" id="task-list-week"></div>
+        <div class="add-task-form">
+            <input type="text" id="new-task-week" placeholder="Задача на неделю...">
+            <button class="add-btn glass-btn" onclick="addTask('week')">+</button>
+        </div>
+    </div>
+
+    <div id="month" class="section">
+        <div class="task-list" id="task-list-month"></div>
+        <div class="add-task-form">
+            <input type="text" id="new-task-month" placeholder="Глобальная цель...">
+            <button class="add-btn glass-btn" onclick="addTask('month')">+</button>
+        </div>
+    </div>
+
+    <div class="health-tip">
+        <h3>💧 Здоровье</h3>
+        <p>Не забывайте пить воду в течение дня.</p>
+        <button class="water-btn" onclick="alert('Отлично! Продолжайте в том же духе.')">Я выпил стакан воды</button>
+    </div>
+
+    <script>
+        const tg = window.Telegram.WebApp;
+        tg.expand();
+        
+        if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
+            document.getElementById('greeting').innerText = `Привет, ${tg.initDataUnsafe.user.first_name}!`;
+        }
+
+        let tasks = JSON.parse(localStorage.getItem('pixelTasks')) || { day: [], week: [], month: [] };
+
+        function saveTasks() {
+            localStorage.setItem('pixelTasks', JSON.stringify(tasks));
+            updateProgress();
+            tg.HapticFeedback.impactOccurred('light');
+        }
+
+        function renderTasks(period) {
+            const list = document.getElementById(`task-list-${period}`);
+            list.innerHTML = '';
+            
+            if (tasks[period].length === 0) {
+                list.innerHTML = `<div style="text-align:center; color:var(--hint-color); padding: 20px; font-size: 14px;">Список пуст</div>`;
+                return;
+            }
+
+            tasks[period].forEach((task, index) => {
+                const div = document.createElement('div');
+                div.className = `task-item ${task.done ? 'completed' : ''}`;
+                div.onclick = () => toggleTask(period, index);
+                div.innerHTML = `
+                    <div class="checkbox ${task.done ? 'checked' : ''}"></div>
+                    <span class="task-text">${task.text}</span>
+                `;
+                list.appendChild(div);
+            });
+            if(period === 'day') updateProgress();
+        }
+
+        function addTask(period) {
+            const input = document.getElementById(`new-task-${period}`);
+            if (input.value.trim() === '') return;
+            
+            tg.HapticFeedback.impactOccurred('medium');
+            
+            tasks[period].push({ text: input.value, done: false });
+            input.value = '';
+            saveTasks();
+            renderTasks(period);
+        }
+
+        function toggleTask(period, index) {
+            tg.HapticFeedback.selectionChanged();
+            tasks[period][index].done = !tasks[period][index].done;
+            saveTasks();
+            renderTasks(period);
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.section').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
+            event.target.classList.add('active');
+            
+            tg.HapticFeedback.impactOccurred('light');
+        }
+
+        function setMood(element, time) {
+            tg.HapticFeedback.selectionChanged();
+            document.querySelectorAll('.mood-btn').forEach(el => el.classList.remove('selected'));
+            element.classList.add('selected');
+            
+            const texts = {
+                'morning': 'Утро началось продуктивно!',
+                'day': 'День в разгаре, держим ритм!',
+                'evening': 'Вечерние итоги подведены.'
+            };
+            document.getElementById('mood-status').innerText = texts[time];
+        }
+
+        function updateProgress() {
+            const dayTasks = tasks.day;
+            const circle = document.getElementById('progress-circle');
+            const percentText = document.getElementById('progress-percent');
+            
+            const circumference = 314; 
+
+            if (dayTasks.length === 0) {
+                percentText.innerText = '0%';
+                circle.style.strokeDashoffset = circumference;
+                return;
+            }
+            
+            const completed = dayTasks.filter(t => t.done).length;
+            const percent = Math.round((completed / dayTasks.length) * 100);
+            
+            percentText.innerText = `${percent}%`;
+            const offset = circumference - (circumference * percent) / 100;
+            circle.style.strokeDashoffset = offset;
+        }
+
+        renderTasks('day');
+        renderTasks('week');
+        renderTasks('month');
+        updateProgress();
+        
+        document.querySelectorAll('input[type="text"]').forEach(input => {
+            input.addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    const period = this.id.split('-')[2];
+                    addTask(period);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
