@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Planner</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-color: var(--tg-theme-bg-color, #ffffff);
@@ -28,6 +28,7 @@
             padding: 20px 16px;
             font-size: 16px;
             -webkit-tap-highlight-color: transparent;
+            padding-bottom: 40px; /* Отступ снизу */
         }
 
         h1 {
@@ -40,11 +41,12 @@
         /* Навигация */
         .tabs {
             display: flex;
-            background-color: rgba(128, 128, 128, 0.1); /* Полупрозрачный фон для контейнера табов */
+            background-color: rgba(128, 128, 128, 0.1);
             padding: 4px;
             border-radius: 12px;
             margin-bottom: 24px;
             backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
 
         .tab-btn {
@@ -159,18 +161,20 @@
             box-shadow: 0 0 0 2px rgba(128, 128, 128, 0.2);
         }
 
-        /* --- ИЗМЕНЕННЫЕ СТИЛИ КНОПОК (Серые полупрозрачные) --- */
-        
+        /* Кнопки (Стеклянный стиль) */
         .glass-btn {
-            background-color: rgba(128, 128, 128, 0.15); /* Светло-серый с прозрачностью */
+            background-color: rgba(128, 128, 128, 0.15);
             color: var(--text-color);
-            border: 1px solid rgba(128, 128, 128, 0.1); /* Еле заметная граница */
-            backdrop-filter: blur(10px); /* Эффект размытия фона под кнопкой */
+            border: 1px solid rgba(128, 128, 128, 0.1);
+            backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             transition: var(--transition);
             cursor: pointer;
             font-family: inherit;
             font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .glass-btn:active {
@@ -178,18 +182,14 @@
             transform: scale(0.96);
         }
 
-        /* Кнопка добавления (+) */
         .add-btn {
             width: 50px;
             font-size: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             border-radius: 12px;
             border: none;
         }
 
-        /* Кнопки настроения */
+        /* Настроение */
         .mood-section {
             margin-top: 30px;
         }
@@ -212,7 +212,6 @@
             border-radius: 12px;
             text-align: center;
             font-size: 13px;
-            /* Применяем класс glass-btn через JS или дублируем стили, здесь применим напрямую для простоты */
             background-color: rgba(128, 128, 128, 0.15);
             color: var(--text-color);
             border: 1px solid rgba(128, 128, 128, 0.1);
@@ -226,7 +225,7 @@
         }
 
         .mood-btn.selected {
-            background-color: rgba(128, 128, 128, 0.3); /* Чуть темнее при выборе */
+            background-color: rgba(128, 128, 128, 0.3);
             border-color: rgba(128, 128, 128, 0.3);
             font-weight: 600;
             transform: translateY(-2px);
@@ -236,7 +235,7 @@
         /* Прогресс бар */
         .progress-card {
             margin-top: 30px;
-            background-color: rgba(128, 128, 128, 0.08); /* Очень легкий фон для карточки прогресса */
+            background-color: rgba(128, 128, 128, 0.08);
             border-radius: var(--card-radius);
             padding: 20px;
             display: flex;
@@ -290,29 +289,58 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Health Section */
-        .health-tip {
+        /* Секция Здоровья и Тренировок (Обновлено) */
+        .wellness-container {
             margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .wellness-card {
             padding: 16px;
             background-color: rgba(128, 128, 128, 0.08);
             border-radius: var(--card-radius);
             border: 1px solid rgba(128, 128, 128, 0.05);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
         }
-        .health-tip h3 {
-            margin: 0 0 8px 0;
+
+        .wellness-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .wellness-icon {
+            font-size: 20px;
+            margin-right: 10px;
+        }
+
+        .wellness-title {
             font-size: 16px;
+            font-weight: 700;
             color: var(--text-color);
-            font-weight: 600;
+            margin: 0;
         }
-        .health-tip p {
-            margin: 0 0 12px 0;
-            font-size: 14px;
+
+        .wellness-desc {
+            font-size: 13px;
             color: var(--hint-color);
+            margin: 0 0 12px 0;
+            line-height: 1.4;
         }
-        .water-btn {
-            width: 100%;
+
+        .action-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .water-btn, .workout-btn {
+            flex-grow: 1;
             padding: 12px;
-            /* Стиль стеклянной кнопки */
             background-color: rgba(128, 128, 128, 0.15);
             color: var(--text-color);
             border: 1px solid rgba(128, 128, 128, 0.1);
@@ -320,12 +348,28 @@
             -webkit-backdrop-filter: blur(10px);
             border-radius: 10px;
             font-weight: 600;
+            font-size: 14px;
             cursor: pointer;
             transition: var(--transition);
+            text-align: center;
         }
-        .water-btn:active {
+
+        .water-btn:active, .workout-btn:active {
             background-color: rgba(128, 128, 128, 0.25);
+            transform: scale(0.98);
         }
+
+        .counter-badge {
+            background-color: var(--button-color);
+            color: var(--button-text-color);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            min-width: 24px;
+            text-align: center;
+        }
+
     </style>
 </head>
 <body>
@@ -367,6 +411,36 @@
             </div>
             <div style="font-size: 14px; color: var(--hint-color); font-weight: 500;">Прогресс выполнения</div>
         </div>
+
+        <!-- Обновленный блок Здоровья и Тренировок -->
+        <div class="wellness-container">
+            
+            <!-- Карточка Здоровье -->
+            <div class="wellness-card">
+                <div class="wellness-header">
+                    <span class="wellness-icon">💧</span>
+                    <h3 class="wellness-title">Здоровье</h3>
+                </div>
+                <p class="wellness-desc">Поддерживай водный баланс. Норма: 8 стаканов в день.</p>
+                <div class="action-row">
+                    <button class="water-btn" onclick="addWater()">Выпить стакан</button>
+                    <div class="counter-badge" id="water-count">0</div>
+                </div>
+            </div>
+
+            <!-- Карточка Тренировка -->
+            <div class="wellness-card">
+                <div class="wellness-header">
+                    <span class="wellness-icon">🏋️</span>
+                    <h3 class="wellness-title">Тренировка</h3>
+                </div>
+                <p class="wellness-desc">Движение — это жизнь. Выполни сегодня комплекс упражнений.</p>
+                <div class="action-row">
+                    <button class="workout-btn" id="workout-btn" onclick="toggleWorkout()">Отметить тренировку</button>
+                </div>
+            </div>
+
+        </div>
     </div>
 
     <!-- Заглушки для недели и месяца -->
@@ -386,12 +460,6 @@
         </div>
     </div>
 
-    <div class="health-tip">
-        <h3>💧 Здоровье</h3>
-        <p>Не забывайте пить воду в течение дня.</p>
-        <button class="water-btn" onclick="alert('Отлично! Продолжайте в том же духе.')">Я выпил стакан воды</button>
-    </div>
-
     <script>
         const tg = window.Telegram.WebApp;
         tg.expand();
@@ -400,24 +468,47 @@
             document.getElementById('greeting').innerText = `Привет, ${tg.initDataUnsafe.user.first_name}!`;
         }
 
-        let tasks = JSON.parse(localStorage.getItem('pixelTasks')) || { day: [], week: [], month: [] };
+        // Загрузка данных (добавили waterCount и workoutDone)
+        let appData = JSON.parse(localStorage.getItem('plannerData')) || { 
+            tasks: { day: [], week: [], month: [] },
+            waterCount: 0,
+            workoutDone: false
+        };
 
-        function saveTasks() {
-            localStorage.setItem('pixelTasks', JSON.stringify(tasks));
+        function saveData() {
+            localStorage.setItem('plannerData', JSON.stringify(appData));
             updateProgress();
+            updateUI();
             tg.HapticFeedback.impactOccurred('light');
+        }
+
+        function updateUI() {
+            // Обновление счетчика воды
+            document.getElementById('water-count').innerText = appData.waterCount;
+            
+            // Обновление кнопки тренировки
+            const btn = document.getElementById('workout-btn');
+            if (appData.workoutDone) {
+                btn.innerText = "Тренировка выполнена ✅";
+                btn.style.backgroundColor = "rgba(51, 144, 236, 0.2)"; // Синеватый оттенок
+                btn.style.borderColor = "rgba(51, 144, 236, 0.4)";
+            } else {
+                btn.innerText = "Отметить тренировку";
+                btn.style.backgroundColor = ""; // Сброс стиля
+                btn.style.borderColor = "";
+            }
         }
 
         function renderTasks(period) {
             const list = document.getElementById(`task-list-${period}`);
             list.innerHTML = '';
             
-            if (tasks[period].length === 0) {
+            if (appData.tasks[period].length === 0) {
                 list.innerHTML = `<div style="text-align:center; color:var(--hint-color); padding: 20px; font-size: 14px;">Список пуст</div>`;
                 return;
             }
 
-            tasks[period].forEach((task, index) => {
+            appData.tasks[period].forEach((task, index) => {
                 const div = document.createElement('div');
                 div.className = `task-item ${task.done ? 'completed' : ''}`;
                 div.onclick = () => toggleTask(period, index);
@@ -436,16 +527,16 @@
             
             tg.HapticFeedback.impactOccurred('medium');
             
-            tasks[period].push({ text: input.value, done: false });
+            appData.tasks[period].push({ text: input.value, done: false });
             input.value = '';
-            saveTasks();
+            saveData();
             renderTasks(period);
         }
 
         function toggleTask(period, index) {
             tg.HapticFeedback.selectionChanged();
-            tasks[period][index].done = !tasks[period][index].done;
-            saveTasks();
+            appData.tasks[period][index].done = !appData.tasks[period][index].done;
+            saveData();
             renderTasks(period);
         }
 
@@ -473,7 +564,7 @@
         }
 
         function updateProgress() {
-            const dayTasks = tasks.day;
+            const dayTasks = appData.tasks.day;
             const circle = document.getElementById('progress-circle');
             const percentText = document.getElementById('progress-percent');
             
@@ -493,10 +584,29 @@
             circle.style.strokeDashoffset = offset;
         }
 
+        // Новые функции для здоровья и тренировок
+        function addWater() {
+            appData.waterCount++;
+            tg.HapticFeedback.notificationOccurred('success');
+            saveData();
+        }
+
+        function toggleWorkout() {
+            appData.workoutDone = !appData.workoutDone;
+            if(appData.workoutDone) {
+                tg.HapticFeedback.notificationOccurred('success');
+            } else {
+                tg.HapticFeedback.impactOccurred('light');
+            }
+            saveData();
+        }
+
+        // Инициализация
         renderTasks('day');
         renderTasks('week');
         renderTasks('month');
         updateProgress();
+        updateUI(); // Обновляем счетчики при загрузке
         
         document.querySelectorAll('input[type="text"]').forEach(input => {
             input.addEventListener('keypress', function (e) {
