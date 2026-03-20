@@ -8,26 +8,29 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #2a2a2e;
-            --bg-secondary: #3a3a3e;
-            --card-bg: rgba(58, 58, 62, 0.8);
-            --text-color: #e8e8ed;
-            --text-secondary: #b8b8c0;
-            --hint-color: #8a8a92;
-            --button-color: #5e81f4;
-            --success-color: #34c759;
-            --warning-color: #ffcc00;
-            --danger-color: #ff5e5e;
-            --radius: 20px;
+            --bg-dark: #0f0f1a;
+            --text-color: #ffffff;
+            --text-secondary: #a0a0b0;
+            --hint-color: #6b6b7b;
+            --radius: 24px;
             --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            
+            /* Gradient Cards */
+            --gradient-tasks: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-energy: linear-gradient(135deg, #ff8a00 0%, #ff5858 100%);
+            --gradient-water: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --gradient-health: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            --gradient-workout: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            --gradient-goals: linear-gradient(135deg, #30cfd0 0%, #330867 100%);
+            --gradient-analytics: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
         }
 
         body {
-            background: 
-                linear-gradient(180deg, rgba(42,42,46,0.9) 0%, rgba(58,58,62,0.95) 100%),
-                url('https://i.pinimg.com/736x/89/1e/c6/891ec6d06a9c8b4b5f5e5d5c5b5a5958.jpg');
-            background-size: cover;
-            background-position: center;
+            background: var(--bg-dark);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(102, 126, 234, 0.3) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(255, 138, 0, 0.25) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(79, 172, 254, 0.3) 0px, transparent 50%);
             background-attachment: fixed;
             color: var(--text-color);
             font-family: 'Inter', sans-serif;
@@ -38,14 +41,14 @@
             min-height: 100vh;
         }
 
-        h1 { font-size: 26px; font-weight: 800; margin: 0 0 16px 0; letter-spacing: -0.5px; }
+        h1 { font-size: 28px; font-weight: 800; margin: 0 0 8px 0; letter-spacing: -0.5px; }
         h2 { font-size: 18px; font-weight: 700; margin: 0 0 12px 0; }
         h3 { font-size: 16px; font-weight: 600; margin: 0; }
 
         .date-display {
-            font-size: 14px;
-            color: var(--hint-color);
-            margin-bottom: 16px;
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
             font-weight: 500;
         }
 
@@ -53,75 +56,83 @@
             display: flex;
             background: rgba(255, 255, 255, 0.08);
             padding: 4px;
-            border-radius: 14px;
+            border-radius: 16px;
             margin-bottom: 20px;
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.1);
         }
         .tab-btn {
             flex: 1;
             background: none; border: none;
-            color: var(--hint-color);
+            color: var(--text-secondary);
             font-family: inherit; font-size: 14px; font-weight: 600;
             padding: 10px 0; border-radius: 12px;
             cursor: pointer; transition: var(--transition);
         }
         .tab-btn.active {
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.2);
             color: var(--text-color);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
 
         .section { display: none; animation: fadeIn 0.4s ease; }
         .section.active { display: block; }
 
+        /* Colorful Cards */
         .card {
-            background: var(--card-bg);
             border-radius: var(--radius);
-            padding: 16px;
+            padding: 18px;
             margin-bottom: 16px;
-            border: 1px solid rgba(255,255,255,0.08);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.15);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
         }
+
+        .card-tasks { background: var(--gradient-tasks); }
+        .card-energy { background: var(--gradient-energy); }
+        .card-water { background: var(--gradient-water); }
+        .card-health { background: var(--gradient-health); }
+        .card-workout { background: var(--gradient-workout); }
+        .card-goals { background: var(--gradient-goals); }
+        .card-analytics { background: var(--gradient-analytics); color: #1a1a2e; }
+        .card-analytics h3 { color: #1a1a2e; }
+        .card-analytics .bar-label { color: #4a4a5a; }
 
         .task-list { display: flex; flex-direction: column; gap: 10px; }
         
         .task-item {
             display: flex; align-items: center;
-            background: rgba(255,255,255,0.06);
-            padding: 14px; border-radius: 14px;
+            background: rgba(255,255,255,0.15);
+            padding: 14px; border-radius: 16px;
             transition: var(--transition);
             cursor: pointer;
-            border: 1px solid rgba(255,255,255,0.05);
-            position: relative;
+            border: 1px solid rgba(255,255,255,0.2);
         }
         .task-item:active { transform: scale(0.98); }
         .task-item.completed { 
-            opacity: 0.6; 
-            background: rgba(52, 199, 89, 0.15);
-            border-color: rgba(52, 199, 89, 0.3);
+            opacity: 0.7; 
+            background: rgba(255,255,255,0.25);
         }
         .task-item.completed .task-text { text-decoration: line-through; }
         
         .task-checkbox {
             width: 24px; height: 24px;
-            border: 2px solid var(--button-color);
+            border: 2px solid rgba(255,255,255,0.8);
             border-radius: 50%;
             margin-right: 12px;
             display: flex; align-items: center; justify-content: center;
             flex-shrink: 0; transition: var(--transition);
         }
-        .task-checkbox.checked { background: var(--button-color); }
-        .task-checkbox.checked::after { content: '✓'; color: #fff; font-size: 14px; font-weight: bold; }
+        .task-checkbox.checked { background: #fff; }
+        .task-checkbox.checked::after { content: '✓'; color: #667eea; font-size: 14px; font-weight: bold; }
         
         .task-content { flex-grow: 1; }
-        .task-text { font-size: 15px; margin-bottom: 4px; }
-        .task-time { font-size: 12px; color: var(--hint-color); display: flex; align-items: center; gap: 6px; }
+        .task-text { font-size: 15px; margin-bottom: 4px; font-weight: 500; }
+        .task-time { font-size: 11px; opacity: 0.8; display: flex; align-items: center; gap: 6px; }
         .task-reminder { 
-            font-size: 11px; 
-            color: var(--warning-color); 
+            font-size: 10px; 
             margin-left: 8px;
             display: flex; 
             align-items: center; 
@@ -130,8 +141,7 @@
 
         .delete-btn {
             width: 32px; height: 32px;
-            background: rgba(255, 94, 94, 0.15);
-            border: 1px solid rgba(255, 94, 94, 0.3);
+            background: rgba(255,255,255,0.2);
             border-radius: 8px;
             display: flex; align-items: center; justify-content: center;
             cursor: pointer;
@@ -139,79 +149,99 @@
             transition: var(--transition);
             margin-left: 8px;
         }
-        .delete-btn::after { content: '🗑️'; font-size: 16px; }
+        .delete-btn::after { content: '🗑️'; font-size: 14px; }
         .task-item.completed .delete-btn { opacity: 1; transform: scale(1); }
-        .delete-btn:active { background: rgba(255, 94, 94, 0.3); transform: scale(0.9); }
 
-        .add-task-form { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+        .add-task-form { display: flex; gap: 8px; margin-top: 12px; }
         .add-task-form input[type="text"] {
-            flex-grow: 1; min-width: 150px;
-            background: rgba(255,255,255,0.08); border: none;
-            color: #fff; padding: 12px 14px; border-radius: 12px;
-            font-family: inherit; font-size: 14px; outline: none;
+            flex-grow: 1;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: #fff;
+            padding: 12px 14px;
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 14px;
+            outline: none;
         }
+        .add-task-form input[type="text"]::placeholder { color: rgba(255,255,255,0.7); }
         .add-task-form input[type="time"] {
-            background: rgba(255,255,255,0.08); border: none;
-            color: #fff; padding: 12px; border-radius: 12px;
-            font-family: inherit; font-size: 14px; outline: none; width: 80px;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: #fff;
+            padding: 12px;
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 14px;
+            outline: none;
+            width: 80px;
         }
         .add-btn {
-            width: 44px; background: var(--button-color); color: #fff;
-            border: none; border-radius: 12px; font-size: 22px;
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer; box-shadow: 0 4px 12px rgba(94, 129, 244, 0.3);
+            width: 44px;
+            background: rgba(255,255,255,0.3);
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            font-size: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
         }
         .reminder-toggle {
-            display: flex; align-items: center; gap: 6px;
-            font-size: 12px; color: var(--hint-color); margin-top: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            opacity: 0.9;
+            margin-top: 8px;
         }
         .reminder-toggle input[type="checkbox"] {
-            width: 18px; height: 18px; accent-color: var(--warning-color);
+            width: 16px; height: 16px;
+            accent-color: #fff;
         }
 
+        /* Week Task */
         .week-task-item {
             display: flex; flex-direction: column;
-            background: rgba(255,255,255,0.06);
-            padding: 14px; border-radius: 14px;
+            background: rgba(255,255,255,0.15);
+            padding: 14px; border-radius: 16px;
             margin-bottom: 10px;
-            border: 1px solid rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.2);
         }
         .week-task-header { display: flex; align-items: center; margin-bottom: 10px; }
         .week-task-text { flex-grow: 1; font-size: 15px; font-weight: 500; }
         .week-task-dots { display: flex; justify-content: space-between; gap: 4px; margin-top: 8px; }
         .week-dot {
             flex: 1; height: 32px;
-            border: 2px solid var(--hint-color);
+            border: 2px solid rgba(255,255,255,0.5);
             border-radius: 8px;
             display: flex; flex-direction: column;
             align-items: center; justify-content: center;
-            cursor: pointer; transition: var(--transition);
-            background: rgba(255,255,255,0.05);
+            cursor: pointer;
+            background: rgba(255,255,255,0.1);
         }
         .week-dot:active { transform: scale(0.9); }
-        .week-dot.completed { background: var(--success-color); border-color: var(--success-color); }
-        .week-dot-label { font-size: 9px; color: var(--hint-color); margin-bottom: 2px; }
-        .week-dot-check { font-size: 14px; color: transparent; }
-        .week-dot.completed .week-dot-check { color: #fff; }
-        .week-dot.completed .week-dot-label { color: #fff; }
+        .week-dot.completed { background: rgba(255,255,255,0.4); border-color: #fff; }
+        .week-dot-label { font-size: 8px; opacity: 0.8; margin-bottom: 2px; }
+        .week-dot-check { font-size: 12px; opacity: 0; }
+        .week-dot.completed .week-dot-check { opacity: 1; }
         .week-task-delete {
             width: 28px; height: 28px;
-            background: rgba(255, 94, 94, 0.15);
-            border: 1px solid rgba(255, 94, 94, 0.3);
+            background: rgba(255,255,255,0.2);
             border-radius: 6px;
             display: flex; align-items: center; justify-content: center;
-            cursor: pointer; margin-left: 8px;
-            opacity: 0; transform: scale(0.8); transition: var(--transition);
+            cursor: pointer;
+            opacity: 0; transform: scale(0.8);
+            transition: var(--transition);
+            margin-left: 8px;
         }
-        .week-task-delete::after { content: '🗑️'; font-size: 14px; }
+        .week-task-delete::after { content: '🗑️'; font-size: 13px; }
         .week-task-item.all-done .week-task-delete { opacity: 1; transform: scale(1); }
-        .week-task-item.all-done {
-            opacity: 0.6;
-            background: rgba(52, 199, 89, 0.15);
-            border-color: rgba(52, 199, 89, 0.3);
-        }
+        .week-task-item.all-done { opacity: 0.7; background: rgba(255,255,255,0.25); }
         .week-task-item.all-done .week-task-text { text-decoration: line-through; }
 
+        /* Energy Cards */
         .energy-section {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -220,61 +250,52 @@
         }
         
         .energy-card {
-            border-radius: 16px;
+            border-radius: 18px;
             padding: 14px 10px;
             display: flex;
             flex-direction: column;
             align-items: center;
             position: relative;
             overflow: hidden;
-            min-height: 150px;
+            min-height: 160px;
             cursor: pointer;
             transition: var(--transition);
-            border: 1px solid rgba(255,255,255,0.12);
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.3);
         }
         .energy-card:active { transform: scale(0.95); }
         .energy-card.selected { 
             transform: scale(1.05); 
-            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
-            border-color: rgba(255,255,255,0.3);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+            border-color: rgba(255,255,255,0.5);
         }
 
         .energy-morning {
-            background: linear-gradient(180deg, rgba(255,180,120,0.85) 0%, rgba(255,140,90,0.85) 50%, rgba(255,200,150,0.85) 100%);
-            color: #4a3a2a;
+            background: linear-gradient(180deg, rgba(255,140,50,0.95) 0%, rgba(255,100,40,0.95) 100%);
+            color: #3a2a1a;
         }
         .energy-morning::before {
             content: '☀️';
             position: absolute;
             top: 10px; right: 10px;
-            font-size: 24px;
-            animation: rotate 20s linear infinite;
+            font-size: 22px;
         }
-        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
         .energy-day {
-            background: linear-gradient(180deg, rgba(100,150,220,0.85) 0%, rgba(80,180,220,0.85) 100%);
-            color: #1a3a4a;
+            background: linear-gradient(180deg, rgba(255,120,60,0.95) 0%, rgba(255,90,50,0.95) 100%);
+            color: #4a2a1a;
         }
         .energy-day::before {
-            content: '☁️';
+            content: '⛅';
             position: absolute;
-            top: 8px; left: 8px;
-            font-size: 20px;
-            animation: float 4s ease-in-out infinite;
+            top: 10px; right: 10px;
+            font-size: 22px;
         }
-        .energy-day::after {
-            content: '☁️';
-            position: absolute;
-            bottom: 40px; right: 8px;
-            font-size: 16px;
-            animation: float 5s ease-in-out infinite reverse;
-        }
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
 
         .energy-evening {
-            background: linear-gradient(180deg, rgba(60,60,80,0.9) 0%, rgba(70,70,95,0.9) 50%, rgba(65,65,88,0.9) 100%);
-            color: #c8d0e0;
+            background: linear-gradient(180deg, rgba(200,80,60,0.95) 0%, rgba(180,60,50,0.95) 100%);
+            color: #ffe8e0;
         }
         .energy-evening::before {
             content: '🌙';
@@ -282,31 +303,29 @@
             top: 10px; right: 10px;
             font-size: 22px;
         }
+
         .star {
             position: absolute;
-            color: rgba(255,255,255,0.7);
-            font-size: 8px;
+            color: rgba(255,255,255,0.8);
+            font-size: 10px;
             animation: twinkle 2s infinite;
         }
         .star:nth-child(1) { top: 15px; left: 15px; animation-delay: 0s; }
-        .star:nth-child(2) { top: 30px; left: 40px; animation-delay: 0.5s; }
-        .star:nth-child(3) { bottom: 50px; left: 20px; animation-delay: 1s; }
-        @keyframes twinkle { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+        .star:nth-child(2) { top: 25px; left: 35px; animation-delay: 0.5s; }
+        .star:nth-child(3) { bottom: 45px; left: 20px; animation-delay: 1s; }
+        @keyframes twinkle { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
 
         .energy-label {
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 700;
             margin-bottom: 8px;
-            position: relative;
-            z-index: 2;
             display: flex;
             align-items: center;
             gap: 4px;
         }
 
-        /* Lightning Icon for Energy Section */
         .energy-lightning {
-            font-size: 16px;
+            font-size: 14px;
             animation: pulse 1.5s infinite;
         }
         @keyframes pulse {
@@ -316,23 +335,23 @@
 
         .energy-circle {
             position: relative;
-            width: 70px; height: 70px;
-            margin: 8px 0;
+            width: 65px; height: 65px;
+            margin: 6px 0;
         }
         .energy-circle svg { transform: rotate(-90deg); width: 100%; height: 100%; }
         .energy-circle circle { fill: none; stroke-width: 6; stroke-linecap: round; }
-        .energy-circle-bg { stroke: rgba(255,255,255,0.25); }
+        .energy-circle-bg { stroke: rgba(255,255,255,0.3); }
         .energy-circle-progress {
-            stroke: rgba(255,255,255,0.9);
-            stroke-dasharray: 188;
-            stroke-dashoffset: 188;
+            stroke: rgba(255,255,255,0.95);
+            stroke-dasharray: 176;
+            stroke-dashoffset: 176;
             transition: stroke-dashoffset 1s ease;
         }
         .energy-percent {
             position: absolute;
             top: 50%; left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 800;
         }
 
@@ -341,116 +360,108 @@
             -webkit-appearance: none;
             height: 4px;
             border-radius: 2px;
-            background: rgba(255,255,255,0.25);
+            background: rgba(255,255,255,0.3);
             outline: none;
         }
         .energy-slider::-webkit-slider-thumb {
             -webkit-appearance: none;
-            width: 16px; height: 16px;
+            width: 14px; height: 14px;
             border-radius: 50%;
             background: #fff;
             cursor: pointer;
             box-shadow: 0 2px 6px rgba(0,0,0,0.3);
         }
 
-        .water-section { margin-bottom: 20px; }
+        /* Water */
         .water-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
         .water-cups { display: flex; gap: 6px; justify-content: space-between; margin-bottom: 12px; }
         .cup {
-            width: 12%; height: 30px;
-            border: 2px solid rgba(255,255,255,0.25);
-            border-radius: 4px 4px 8px 8px;
+            width: 12%; height: 28px;
+            border: 2px solid rgba(255,255,255,0.4);
+            border-radius: 4px 4px 6px 6px;
             position: relative; overflow: hidden;
-            transition: var(--transition);
         }
-        .cup.filled { border-color: #4aa8ff; }
+        .cup.filled { border-color: #fff; }
         .cup.filled::after {
             content: '';
             position: absolute;
             bottom: 0; left: 0; right: 0;
             height: 100%;
-            background: linear-gradient(180deg, #4aa8ff 0%, #2a78d8 100%);
-            animation: fillUp 0.5s ease;
+            background: rgba(255,255,255,0.6);
         }
-        @keyframes fillUp { from { height: 0%; } to { height: 100%; } }
-        
-        .water-text { font-size: 13px; color: var(--hint-color); text-align: center; margin-bottom: 12px; }
+        .water-text { font-size: 12px; opacity: 0.9; text-align: center; margin-bottom: 12px; }
         .btn-water {
-            width: 100%; padding: 14px;
-            background: linear-gradient(135deg, #4aa8ff 0%, #2a78d8 100%);
-            color: #fff; border: none; border-radius: 14px;
-            font-weight: 700; font-size: 15px;
+            width: 100%; padding: 13px;
+            background: rgba(255,255,255,0.25);
+            color: #fff; border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 14px;
+            font-weight: 700; font-size: 14px;
             cursor: pointer;
-            box-shadow: 0 4px 12px rgba(74, 168, 255, 0.3);
-            transition: var(--transition);
         }
-        .btn-water:active { transform: scale(0.97); }
+        .btn-water:active { transform: scale(0.97); background: rgba(255,255,255,0.35); }
 
+        /* Custom Items */
         .custom-section { margin-bottom: 20px; }
         .custom-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
         .btn-add {
-            background: rgba(255,255,255,0.1);
-            color: #fff; border: none;
-            padding: 8px 14px; border-radius: 10px;
-            font-size: 12px; font-weight: 600;
+            background: rgba(255,255,255,0.2);
+            color: #fff; border: 1px solid rgba(255,255,255,0.3);
+            padding: 7px 12px; border-radius: 10px;
+            font-size: 11px; font-weight: 600;
             cursor: pointer;
         }
         .custom-list { display: flex; flex-direction: column; gap: 8px; }
         .custom-item {
             display: flex; justify-content: space-between; align-items: center;
-            background: rgba(255,255,255,0.06);
-            padding: 12px 14px; border-radius: 12px;
+            background: rgba(255,255,255,0.15);
+            padding: 11px 13px; border-radius: 12px;
             font-size: 14px;
+            border: 1px solid rgba(255,255,255,0.2);
         }
         .custom-check {
-            width: 22px; height: 22px;
-            border: 2px solid var(--hint-color);
-            border-radius: 6px;
+            width: 20px; height: 20px;
+            border: 2px solid rgba(255,255,255,0.5);
+            border-radius: 5px;
             display: flex; align-items: center; justify-content: center;
-            cursor: pointer; transition: var(--transition);
+            cursor: pointer;
         }
-        .custom-check.done { background: var(--success-color); border-color: var(--success-color); }
-        .custom-check.done::after { content: '✓'; color: #fff; font-size: 14px; }
+        .custom-check.done { background: rgba(255,255,255,0.4); border-color: #fff; }
+        .custom-check.done::after { content: '✓'; color: #fff; font-size: 12px; }
 
+        /* Progress Circle */
         .progress-card {
-            background: var(--card-bg);
+            background: rgba(255,255,255,0.1);
             border-radius: var(--radius);
             padding: 20px;
             display: flex; flex-direction: column; align-items: center;
             margin-bottom: 20px;
-            border: 1px solid rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.2);
         }
-        .progress-wrapper { position: relative; width: 160px; height: 160px; margin-bottom: 12px; }
+        .progress-wrapper { position: relative; width: 150px; height: 150px; margin-bottom: 12px; }
         .progress-wrapper svg { transform: rotate(-90deg); width: 100%; height: 100%; }
         .progress-wrapper circle { fill: none; stroke-width: 12; stroke-linecap: round; }
-        .progress-bg { stroke: rgba(255,255,255,0.08); }
+        .progress-bg { stroke: rgba(255,255,255,0.15); }
         .progress-bar {
-            stroke: var(--button-color);
-            stroke-dasharray: 440;
-            stroke-dashoffset: 440;
+            stroke: #fff;
+            stroke-dasharray: 408;
+            stroke-dashoffset: 408;
             transition: stroke-dashoffset 1.2s ease;
-            filter: drop-shadow(0 0 10px rgba(94, 129, 244, 0.5));
+            filter: drop-shadow(0 0 10px rgba(255,255,255,0.5));
         }
         .progress-text {
             position: absolute;
             top: 50%; left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 28px; font-weight: 800;
+            font-size: 26px; font-weight: 800;
         }
-        .progress-label { font-size: 13px; color: var(--hint-color); }
+        .progress-label { font-size: 12px; opacity: 0.8; }
 
-        .analytics-card {
-            background: var(--card-bg);
-            border-radius: var(--radius);
-            padding: 16px;
-            margin-bottom: 20px;
-            border: 1px solid rgba(255,255,255,0.08);
-        }
+        /* Analytics */
         .analytics-chart {
             display: flex;
             justify-content: space-between;
             align-items: flex-end;
-            height: 140px;
+            height: 130px;
             padding: 10px 0;
             gap: 4px;
         }
@@ -467,56 +478,51 @@
             transition: height 0.8s cubic-bezier(0.4, 0, 0.2, 1);
             min-height: 4px;
         }
-        .bar.green { background: var(--success-color); box-shadow: 0 0 12px rgba(52, 199, 89, 0.4); }
-        .bar.yellow { background: var(--warning-color); box-shadow: 0 0 12px rgba(255, 204, 0, 0.4); }
-        .bar.red { background: var(--danger-color); box-shadow: 0 0 12px rgba(255, 94, 94, 0.4); }
-        .bar-label { font-size: 10px; color: var(--hint-color); margin-top: 6px; font-weight: 500; }
+        .bar.green { background: #34c759; }
+        .bar.yellow { background: #ffcc00; }
+        .bar.red { background: #ff5e5e; }
+        .bar-label { font-size: 9px; margin-top: 6px; font-weight: 600; }
 
+        /* Month Goals */
         .goal-item {
             display: flex; align-items: center;
-            background: rgba(255,255,255,0.06);
-            padding: 16px; border-radius: 14px;
+            background: rgba(255,255,255,0.15);
+            padding: 15px; border-radius: 16px;
             margin-bottom: 10px;
-            border: 2px solid rgba(255,255,255,0.08);
-            transition: var(--transition);
+            border: 1px solid rgba(255,255,255,0.2);
             cursor: pointer;
-            position: relative;
         }
         .goal-item:active { transform: scale(0.98); }
         .goal-item.completed {
-            background: linear-gradient(135deg, rgba(52, 199, 89, 0.3) 0%, rgba(52, 199, 89, 0.15) 100%);
-            border-color: var(--success-color);
+            background: rgba(255,255,255,0.3);
+            border-color: rgba(255,255,255,0.5);
         }
         .goal-check {
-            width: 26px; height: 26px;
-            border: 2px dashed var(--hint-color);
-            border-radius: 8px;
-            margin-right: 14px;
+            width: 24px; height: 24px;
+            border: 2px dashed rgba(255,255,255,0.5);
+            border-radius: 7px;
+            margin-right: 12px;
             display: flex; align-items: center; justify-content: center;
-            transition: var(--transition);
         }
         .goal-item.completed .goal-check {
-            background: var(--success-color);
+            background: rgba(255,255,255,0.4);
             border-style: solid;
-            border-color: var(--success-color);
         }
-        .goal-item.completed .goal-check::after { content: '✓'; color: #fff; font-size: 18px; font-weight: bold; }
-        .goal-text { flex-grow: 1; font-size: 15px; font-weight: 500; transition: var(--transition); }
-        .goal-item.completed .goal-text { color: #fff; font-weight: 700; }
+        .goal-item.completed .goal-check::after { content: '✓'; color: #fff; font-size: 16px; }
+        .goal-text { flex-grow: 1; font-size: 15px; font-weight: 500; }
+        .goal-item.completed .goal-text { text-decoration: line-through; opacity: 0.8; }
         .goal-delete {
-            width: 30px; height: 30px;
-            background: rgba(255, 94, 94, 0.15);
-            border: 1px solid rgba(255, 94, 94, 0.3);
-            border-radius: 8px;
+            width: 28px; height: 28px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 7px;
             display: flex; align-items: center; justify-content: center;
             cursor: pointer;
             opacity: 0; transform: scale(0.8);
             transition: var(--transition);
             margin-left: 8px;
         }
-        .goal-delete::after { content: '🗑️'; font-size: 15px; }
+        .goal-delete::after { content: '🗑️'; font-size: 13px; }
         .goal-item.completed .goal-delete { opacity: 1; transform: scale(1); }
-        .goal-delete:active { background: rgba(255, 94, 94, 0.3); transform: scale(0.9); }
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
@@ -535,7 +541,8 @@
     <!-- ============ DAY SECTION ============ -->
     <div id="day" class="section active">
         
-        <div class="card">
+        <!-- Tasks Card -->
+        <div class="card card-tasks">
             <h2>📋 Задачи</h2>
             <div class="task-list" id="task-list-day"></div>
             <div class="add-task-form">
@@ -545,72 +552,79 @@
             </div>
             <label class="reminder-toggle">
                 <input type="checkbox" id="reminder-day">
-                📢 Напоминание
+                🔔 Напоминание
             </label>
         </div>
 
-        <!-- Energy with Lightning Icon -->
-        <div class="energy-section">
-            <div class="energy-card energy-morning" onclick="selectEnergy('morning', this)">
-                <div class="star">✨</div>
-                <div class="energy-label">
-                    <span class="energy-lightning">⚡</span>
-                    <span>🌅 Утро</span>
+        <!-- Energy Section -->
+        <div class="card card-energy">
+            <h2 style="display:flex;align-items:center;gap:6px;">⚡ Энергия</h2>
+            <div class="energy-section">
+                <div class="energy-card energy-morning" onclick="selectEnergy('morning', this)">
+                    <div class="star">✨</div>
+                    <div class="star">✨</div>
+                    <div class="energy-label">
+                        <span class="energy-lightning">⚡</span>
+                        <span>🌅 Утро</span>
+                    </div>
+                    <div class="energy-circle">
+                        <svg><circle class="energy-circle-bg" cx="32.5" cy="32.5" r="28"></circle><circle class="energy-circle-progress" id="energy-morning-circle" cx="32.5" cy="32.5" r="28"></circle></svg>
+                        <div class="energy-percent" id="energy-morning-text">50%</div>
+                    </div>
+                    <input type="range" min="0" max="100" value="50" class="energy-slider" oninput="updateEnergy('morning', this.value)">
                 </div>
-                <div class="energy-circle">
-                    <svg><circle class="energy-circle-bg" cx="35" cy="35" r="30"></circle><circle class="energy-circle-progress" id="energy-morning-circle" cx="35" cy="35" r="30"></circle></svg>
-                    <div class="energy-percent" id="energy-morning-text">50%</div>
+                <div class="energy-card energy-day" onclick="selectEnergy('day', this)">
+                    <div class="star">✨</div>
+                    <div class="star">✨</div>
+                    <div class="star">✨</div>
+                    <div class="energy-label">
+                        <span class="energy-lightning">⚡</span>
+                        <span>☀️ День</span>
+                    </div>
+                    <div class="energy-circle">
+                        <svg><circle class="energy-circle-bg" cx="32.5" cy="32.5" r="28"></circle><circle class="energy-circle-progress" id="energy-day-circle" cx="32.5" cy="32.5" r="28"></circle></svg>
+                        <div class="energy-percent" id="energy-day-text">50%</div>
+                    </div>
+                    <input type="range" min="0" max="100" value="50" class="energy-slider" oninput="updateEnergy('day', this.value)">
                 </div>
-                <input type="range" min="0" max="100" value="50" class="energy-slider" oninput="updateEnergy('morning', this.value)">
-            </div>
-            <div class="energy-card energy-day" onclick="selectEnergy('day', this)">
-                <div class="star">✨</div>
-                <div class="star">✨</div>
-                <div class="energy-label">
-                    <span class="energy-lightning">⚡</span>
-                    <span>☀️ День</span>
+                <div class="energy-card energy-evening" onclick="selectEnergy('evening', this)">
+                    <div class="star">✨</div>
+                    <div class="star">✨</div>
+                    <div class="energy-label">
+                        <span class="energy-lightning">⚡</span>
+                        <span>🌙 Вечер</span>
+                    </div>
+                    <div class="energy-circle">
+                        <svg><circle class="energy-circle-bg" cx="32.5" cy="32.5" r="28"></circle><circle class="energy-circle-progress" id="energy-evening-circle" cx="32.5" cy="32.5" r="28"></circle></svg>
+                        <div class="energy-percent" id="energy-evening-text">50%</div>
+                    </div>
+                    <input type="range" min="0" max="100" value="50" class="energy-slider" oninput="updateEnergy('evening', this.value)">
                 </div>
-                <div class="energy-circle">
-                    <svg><circle class="energy-circle-bg" cx="35" cy="35" r="30"></circle><circle class="energy-circle-progress" id="energy-day-circle" cx="35" cy="35" r="30"></circle></svg>
-                    <div class="energy-percent" id="energy-day-text">50%</div>
-                </div>
-                <input type="range" min="0" max="100" value="50" class="energy-slider" oninput="updateEnergy('day', this.value)">
-            </div>
-            <div class="energy-card energy-evening" onclick="selectEnergy('evening', this)">
-                <div class="star">✨</div>
-                <div class="star">✨</div>
-                <div class="star">✨</div>
-                <div class="energy-label">
-                    <span class="energy-lightning">⚡</span>
-                    <span>🌙 Вечер</span>
-                </div>
-                <div class="energy-circle">
-                    <svg><circle class="energy-circle-bg" cx="35" cy="35" r="30"></circle><circle class="energy-circle-progress" id="energy-evening-circle" cx="35" cy="35" r="30"></circle></svg>
-                    <div class="energy-percent" id="energy-evening-text">50%</div>
-                </div>
-                <input type="range" min="0" max="100" value="50" class="energy-slider" oninput="updateEnergy('evening', this.value)">
             </div>
         </div>
 
+        <!-- Progress -->
         <div class="progress-card">
             <div class="progress-wrapper">
-                <svg><circle class="progress-bg" cx="80" cy="80" r="70"></circle><circle class="progress-bar" id="progress-circle" cx="80" cy="80" r="70"></circle></svg>
+                <svg><circle class="progress-bg" cx="75" cy="75" r="65"></circle><circle class="progress-bar" id="progress-circle" cx="75" cy="75" r="65"></circle></svg>
                 <div class="progress-text" id="progress-percent">0%</div>
             </div>
             <div class="progress-label">Прогресс дня (мин. 3 задачи)</div>
         </div>
 
-        <div class="card water-section">
+        <!-- Water Card -->
+        <div class="card card-water">
             <div class="water-header">
                 <h3>💧 Вода</h3>
-                <span style="font-size: 13px; color: var(--hint-color);" id="water-count">0/8</span>
+                <span style="font-size: 12px; opacity: 0.9;" id="water-count">0/8</span>
             </div>
             <div class="water-cups" id="water-cups"></div>
             <div class="water-text">Поддерживай водный баланс</div>
             <button class="btn-water" onclick="addWater()">+ Выпить стакан</button>
         </div>
 
-        <div class="card custom-section">
+        <!-- Health Card -->
+        <div class="card card-health">
             <div class="custom-header">
                 <h3>🏥 Здоровье</h3>
                 <button class="btn-add" onclick="addCustomItem('health')">+ Добавить</button>
@@ -618,7 +632,8 @@
             <div class="custom-list" id="list-health"></div>
         </div>
 
-        <div class="card custom-section">
+        <!-- Workout Card -->
+        <div class="card card-workout">
             <div class="custom-header">
                 <h3>🏋️ Тренировка</h3>
                 <button class="btn-add" onclick="addCustomItem('workout')">+ Добавить</button>
@@ -630,7 +645,7 @@
 
     <!-- ============ WEEK SECTION ============ -->
     <div id="week" class="section">
-        <div class="card">
+        <div class="card card-tasks">
             <h2>📅 Задачи на неделю</h2>
             <div class="task-list" id="task-list-week"></div>
             <div class="add-task-form">
@@ -639,7 +654,7 @@
             </div>
         </div>
 
-        <div class="analytics-card">
+        <div class="card card-analytics">
             <h3>📊 Продуктивность недели</h3>
             <div class="analytics-chart" id="chart-week"></div>
         </div>
@@ -647,7 +662,7 @@
 
     <!-- ============ MONTH SECTION ============ -->
     <div id="month" class="section">
-        <div class="card">
+        <div class="card card-goals">
             <h2>🎯 Цели месяца</h2>
             <div id="goal-list-month"></div>
             <div class="add-task-form">
@@ -656,7 +671,7 @@
             </div>
         </div>
 
-        <div class="analytics-card">
+        <div class="card card-analytics">
             <h3>📈 Прогресс по неделям</h3>
             <div class="analytics-chart" id="chart-month"></div>
         </div>
@@ -675,7 +690,7 @@
         document.getElementById('date-display').innerText = now.toLocaleDateString('ru-RU', options);
 
         const daysShort = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
-        const emojis = ['📝', '💼', '🏃', '', '🎯', '💡', '🔥', '✨', '💪', ''];
+        const emojis = ['📝', '💼', '🏃', '📚', '🎯', '💡', '🔥', '✨', '💪', ''];
 
         let appData = JSON.parse(localStorage.getItem('plannerProData')) || {
             tasks: { day: [], week: [] },
@@ -740,7 +755,7 @@
             list.innerHTML = '';
             
             if (appData.tasks.day.length === 0) {
-                list.innerHTML = '<div style="text-align:center; color:var(--hint-color); padding:20px;">Нет задач на сегодня</div>';
+                list.innerHTML = '<div style="text-align:center; opacity:0.8; padding:20px;">Нет задач на сегодня</div>';
                 return;
             }
             
@@ -753,7 +768,7 @@
                     timeHtml = `<span class="task-time">⏰ ${task.time}</span>`;
                 }
                 if (task.reminder && task.time) {
-                    timeHtml += `<span class="task-reminder">📢</span>`;
+                    timeHtml += `<span class="task-reminder">🔔</span>`;
                 }
                 
                 div.innerHTML = `
@@ -811,7 +826,7 @@
             list.innerHTML = '';
             
             if (appData.tasks.week.length === 0) {
-                list.innerHTML = '<div style="text-align:center; color:var(--hint-color); padding:20px;">Нет задач на неделю</div>';
+                list.innerHTML = '<div style="text-align:center; opacity:0.8; padding:20px;">Нет задач на неделю</div>';
                 return;
             }
             
@@ -868,7 +883,7 @@
             
             const circle = document.getElementById(`energy-${period}-circle`);
             const text = document.getElementById(`energy-${period}-text`);
-            const circumference = 188;
+            const circumference = 176;
             const offset = circumference - (circumference * value) / 100;
             
             circle.style.strokeDashoffset = offset;
@@ -882,7 +897,7 @@
                 const value = appData.energy[period] || 50;
                 const circle = document.getElementById(`energy-${period}-circle`);
                 const text = document.getElementById(`energy-${period}-text`);
-                const circumference = 188;
+                const circumference = 176;
                 const offset = circumference - (circumference * value) / 100;
                 
                 circle.style.strokeDashoffset = offset;
@@ -932,7 +947,7 @@
             list.innerHTML = '';
             
             if (appData[category].length === 0) {
-                list.innerHTML = '<div style="text-align:center; color:var(--hint-color); padding:10px; font-size:13px;">Пусто</div>';
+                list.innerHTML = '<div style="text-align:center; opacity:0.8; padding:10px; font-size:13px;">Пусто</div>';
                 return;
             }
             
@@ -960,7 +975,7 @@
             const percent = Math.min(100, Math.round((completed / target) * 100));
             
             const circle = document.getElementById('progress-circle');
-            const circumference = 440;
+            const circumference = 408;
             const offset = circumference - (circumference * percent) / 100;
             
             document.getElementById('progress-percent').innerText = `${percent}%`;
@@ -983,7 +998,7 @@
             list.innerHTML = '';
             
             if (appData.goals.month.length === 0) {
-                list.innerHTML = '<div style="text-align:center; color:var(--hint-color); padding:20px;">Нет целей</div>';
+                list.innerHTML = '<div style="text-align:center; opacity:0.8; padding:20px;">Нет целей</div>';
                 return;
             }
             
@@ -1013,7 +1028,7 @@
             renderGoals();
         }
 
-        // --- ANALYTICS (REAL DATA) ---
+        // --- ANALYTICS ---
         function getWeekNumber(date) {
             const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
             const dayNum = d.getUTCDay() || 7;
@@ -1029,7 +1044,6 @@
             const today = new Date();
             
             if (period === 'week') {
-                const daysShort = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
                 const startOfWeek = new Date(today);
                 startOfWeek.setDate(today.getDate() - today.getDay() + 1);
                 startOfWeek.setHours(0, 0, 0, 0);
