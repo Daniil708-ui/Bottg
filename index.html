@@ -8,21 +8,24 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #1c1c1e;
-            --card-bg: rgba(44, 44, 46, 0.75);
-            --text-color: #ffffff;
-            --hint-color: #8e8e93;
-            --button-color: #0a84ff;
-            --success-color: #30d158;
-            --warning-color: #ffd60a;
-            --danger-color: #ff453a;
+            /* Темно-серая палитра без черного */
+            --bg-color: #2a2a2e;
+            --bg-secondary: #3a3a3e;
+            --card-bg: rgba(58, 58, 62, 0.8);
+            --text-color: #e8e8ed;
+            --text-secondary: #b8b8c0;
+            --hint-color: #8a8a92;
+            --button-color: #5e81f4;
+            --success-color: #34c759;
+            --warning-color: #ffcc00;
+            --danger-color: #ff5e5e;
             --radius: 20px;
             --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
         body {
             background: 
-                linear-gradient(180deg, rgba(15,15,17,0.85) 0%, rgba(28,28,30,0.9) 100%),
+                linear-gradient(180deg, rgba(42,42,46,0.9) 0%, rgba(58,58,62,0.95) 100%),
                 url('https://i.pinimg.com/736x/89/1e/c6/891ec6d06a9c8b4b5f5e5d5c5b5a5958.jpg');
             background-size: cover;
             background-position: center;
@@ -50,13 +53,13 @@
         /* Tabs */
         .tabs {
             display: flex;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.08);
             padding: 4px;
             border-radius: 14px;
             margin-bottom: 20px;
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.08);
         }
         .tab-btn {
             flex: 1;
@@ -67,9 +70,9 @@
             cursor: pointer; transition: var(--transition);
         }
         .tab-btn.active {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.15);
             color: var(--text-color);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
 
         .section { display: none; animation: fadeIn 0.4s ease; }
@@ -81,7 +84,7 @@
             border-radius: var(--radius);
             padding: 16px;
             margin-bottom: 16px;
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.08);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
         }
@@ -91,7 +94,7 @@
         
         .task-item {
             display: flex; align-items: center;
-            background: rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.06);
             padding: 14px; border-radius: 14px;
             transition: var(--transition);
             cursor: pointer;
@@ -101,8 +104,8 @@
         .task-item:active { transform: scale(0.98); }
         .task-item.completed { 
             opacity: 0.6; 
-            background: rgba(48, 209, 88, 0.15);
-            border-color: rgba(48, 209, 88, 0.3);
+            background: rgba(52, 199, 89, 0.15);
+            border-color: rgba(52, 199, 89, 0.3);
         }
         .task-item.completed .task-text { text-decoration: line-through; }
         
@@ -133,8 +136,8 @@
         .delete-btn {
             width: 32px;
             height: 32px;
-            background: rgba(255, 69, 58, 0.2);
-            border: 1px solid rgba(255, 69, 58, 0.4);
+            background: rgba(255, 94, 94, 0.15);
+            border: 1px solid rgba(255, 94, 94, 0.3);
             border-radius: 8px;
             display: flex;
             align-items: center;
@@ -145,165 +148,79 @@
             transition: var(--transition);
             margin-left: 8px;
         }
-        .delete-btn::after {
-            content: '🗑️';
-            font-size: 16px;
-        }
-        .task-item.completed .delete-btn {
-            opacity: 1;
-            transform: scale(1);
-        }
-        .delete-btn:active {
-            background: rgba(255, 69, 58, 0.4);
-            transform: scale(0.9);
-        }
+        .delete-btn::after { content: '🗑️'; font-size: 16px; }
+        .task-item.completed .delete-btn { opacity: 1; transform: scale(1); }
+        .delete-btn:active { background: rgba(255, 94, 94, 0.3); transform: scale(0.9); }
 
-        .add-task-form { 
-            display: flex; 
-            gap: 8px; 
-            margin-top: 12px;
-            flex-wrap: wrap;
-        }
+        .add-task-form { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
         .add-task-form input[type="text"] {
-            flex-grow: 1; 
-            min-width: 150px;
-            background: rgba(255,255,255,0.1); 
-            border: none;
-            color: #fff; 
-            padding: 12px 14px; 
-            border-radius: 12px;
-            font-family: inherit; 
-            font-size: 14px; 
-            outline: none;
+            flex-grow: 1; min-width: 150px;
+            background: rgba(255,255,255,0.08); border: none;
+            color: #fff; padding: 12px 14px; border-radius: 12px;
+            font-family: inherit; font-size: 14px; outline: none;
         }
         .add-task-form input[type="time"] {
-            background: rgba(255,255,255,0.1); 
-            border: none;
-            color: #fff; 
-            padding: 12px; 
-            border-radius: 12px;
-            font-family: inherit; 
-            font-size: 14px;
-            outline: none;
-            width: 80px;
+            background: rgba(255,255,255,0.08); border: none;
+            color: #fff; padding: 12px; border-radius: 12px;
+            font-family: inherit; font-size: 14px; outline: none; width: 80px;
         }
         .add-btn {
-            width: 44px; 
-            background: var(--button-color); 
-            color: #fff;
-            border: none; 
-            border-radius: 12px; 
-            font-size: 22px;
-            display: flex; 
-            align-items: center; 
-            justify-content: center;
-            cursor: pointer; 
-            box-shadow: 0 4px 12px rgba(10, 132, 255, 0.4);
+            width: 44px; background: var(--button-color); color: #fff;
+            border: none; border-radius: 12px; font-size: 22px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; box-shadow: 0 4px 12px rgba(94, 129, 244, 0.3);
         }
         .reminder-toggle {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 12px;
-            color: var(--hint-color);
-            margin-top: 8px;
+            display: flex; align-items: center; gap: 6px;
+            font-size: 12px; color: var(--hint-color); margin-top: 8px;
         }
         .reminder-toggle input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            accent-color: var(--warning-color);
+            width: 18px; height: 18px; accent-color: var(--warning-color);
         }
 
         /* Week Task with 7 Dots */
         .week-task-item {
-            display: flex;
-            flex-direction: column;
-            background: rgba(255,255,255,0.08);
-            padding: 14px;
-            border-radius: 14px;
+            display: flex; flex-direction: column;
+            background: rgba(255,255,255,0.06);
+            padding: 14px; border-radius: 14px;
             margin-bottom: 10px;
             border: 1px solid rgba(255,255,255,0.05);
         }
-        .week-task-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-        .week-task-text {
-            flex-grow: 1;
-            font-size: 15px;
-            font-weight: 500;
-        }
-        .week-task-dots {
-            display: flex;
-            justify-content: space-between;
-            gap: 4px;
-            margin-top: 8px;
-        }
+        .week-task-header { display: flex; align-items: center; margin-bottom: 10px; }
+        .week-task-text { flex-grow: 1; font-size: 15px; font-weight: 500; }
+        .week-task-dots { display: flex; justify-content: space-between; gap: 4px; margin-top: 8px; }
         .week-dot {
-            flex: 1;
-            height: 32px;
+            flex: 1; height: 32px;
             border: 2px solid var(--hint-color);
             border-radius: 8px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: var(--transition);
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            cursor: pointer; transition: var(--transition);
             background: rgba(255,255,255,0.05);
         }
         .week-dot:active { transform: scale(0.9); }
-        .week-dot.completed {
-            background: var(--success-color);
-            border-color: var(--success-color);
-        }
-        .week-dot-label {
-            font-size: 9px;
-            color: var(--hint-color);
-            margin-bottom: 2px;
-        }
-        .week-dot-check {
-            font-size: 14px;
-            color: transparent;
-        }
-        .week-dot.completed .week-dot-check {
-            color: #fff;
-        }
-        .week-dot.completed .week-dot-label {
-            color: #fff;
-        }
+        .week-dot.completed { background: var(--success-color); border-color: var(--success-color); }
+        .week-dot-label { font-size: 9px; color: var(--hint-color); margin-bottom: 2px; }
+        .week-dot-check { font-size: 14px; color: transparent; }
+        .week-dot.completed .week-dot-check { color: #fff; }
+        .week-dot.completed .week-dot-label { color: #fff; }
         .week-task-delete {
-            width: 28px;
-            height: 28px;
-            background: rgba(255, 69, 58, 0.2);
-            border: 1px solid rgba(255, 69, 58, 0.4);
+            width: 28px; height: 28px;
+            background: rgba(255, 94, 94, 0.15);
+            border: 1px solid rgba(255, 94, 94, 0.3);
             border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            margin-left: 8px;
-            opacity: 0;
-            transform: scale(0.8);
-            transition: var(--transition);
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; margin-left: 8px;
+            opacity: 0; transform: scale(0.8); transition: var(--transition);
         }
-        .week-task-delete::after {
-            content: '🗑️';
-            font-size: 14px;
-        }
-        .week-task-item.all-done .week-task-delete {
-            opacity: 1;
-            transform: scale(1);
-        }
+        .week-task-delete::after { content: '🗑️'; font-size: 14px; }
+        .week-task-item.all-done .week-task-delete { opacity: 1; transform: scale(1); }
         .week-task-item.all-done {
             opacity: 0.6;
-            background: rgba(48, 209, 88, 0.15);
-            border-color: rgba(48, 209, 88, 0.3);
+            background: rgba(52, 199, 89, 0.15);
+            border-color: rgba(52, 199, 89, 0.3);
         }
-        .week-task-item.all-done .week-task-text {
-            text-decoration: line-through;
-        }
+        .week-task-item.all-done .week-task-text { text-decoration: line-through; }
 
         /* Energy Cards */
         .energy-section {
@@ -324,65 +241,61 @@
             min-height: 150px;
             cursor: pointer;
             transition: var(--transition);
-            border: 1px solid rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.12);
         }
         .energy-card:active { transform: scale(0.95); }
         .energy-card.selected { 
             transform: scale(1.05); 
-            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
-            border-color: rgba(255,255,255,0.4);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+            border-color: rgba(255,255,255,0.3);
         }
 
         .energy-morning {
-            background: linear-gradient(180deg, rgba(255,216,155,0.9) 0%, rgba(249,168,117,0.9) 50%, rgba(255,236,210,0.9) 100%);
-            color: #5a3e2b;
+            background: linear-gradient(180deg, rgba(255,180,120,0.85) 0%, rgba(255,140,90,0.85) 50%, rgba(255,200,150,0.85) 100%);
+            color: #4a3a2a;
         }
         .energy-morning::before {
             content: '☀️';
             position: absolute;
-            top: 10px;
-            right: 10px;
+            top: 10px; right: 10px;
             font-size: 24px;
             animation: rotate 20s linear infinite;
         }
         @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
         .energy-day {
-            background: linear-gradient(180deg, rgba(79,172,254,0.9) 0%, rgba(0,242,254,0.9) 100%);
-            color: #004d66;
+            background: linear-gradient(180deg, rgba(100,150,220,0.85) 0%, rgba(80,180,220,0.85) 100%);
+            color: #1a3a4a;
         }
         .energy-day::before {
             content: '☁️';
             position: absolute;
-            top: 8px;
-            left: 8px;
+            top: 8px; left: 8px;
             font-size: 20px;
             animation: float 4s ease-in-out infinite;
         }
         .energy-day::after {
             content: '☁️';
             position: absolute;
-            bottom: 40px;
-            right: 8px;
+            bottom: 40px; right: 8px;
             font-size: 16px;
             animation: float 5s ease-in-out infinite reverse;
         }
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
 
         .energy-evening {
-            background: linear-gradient(180deg, rgba(15,12,41,0.95) 0%, rgba(48,43,99,0.95) 50%, rgba(36,36,62,0.95) 100%);
-            color: #a8b5d6;
+            background: linear-gradient(180deg, rgba(60,60,80,0.9) 0%, rgba(70,70,95,0.9) 50%, rgba(65,65,88,0.9) 100%);
+            color: #c8d0e0;
         }
         .energy-evening::before {
             content: '🌙';
             position: absolute;
-            top: 10px;
-            right: 10px;
+            top: 10px; right: 10px;
             font-size: 22px;
         }
         .star {
             position: absolute;
-            color: rgba(255,255,255,0.8);
+            color: rgba(255,255,255,0.7);
             font-size: 8px;
             animation: twinkle 2s infinite;
         }
@@ -404,31 +317,21 @@
 
         .energy-circle {
             position: relative;
-            width: 70px;
-            height: 70px;
+            width: 70px; height: 70px;
             margin: 8px 0;
         }
-        .energy-circle svg {
-            transform: rotate(-90deg);
-            width: 100%;
-            height: 100%;
-        }
-        .energy-circle circle {
-            fill: none;
-            stroke-width: 6;
-            stroke-linecap: round;
-        }
-        .energy-circle-bg { stroke: rgba(255,255,255,0.3); }
+        .energy-circle svg { transform: rotate(-90deg); width: 100%; height: 100%; }
+        .energy-circle circle { fill: none; stroke-width: 6; stroke-linecap: round; }
+        .energy-circle-bg { stroke: rgba(255,255,255,0.25); }
         .energy-circle-progress {
-            stroke: rgba(255,255,255,0.95);
+            stroke: rgba(255,255,255,0.9);
             stroke-dasharray: 188;
             stroke-dashoffset: 188;
             transition: stroke-dashoffset 1s ease;
         }
         .energy-percent {
             position: absolute;
-            top: 50%;
-            left: 50%;
+            top: 50%; left: 50%;
             transform: translate(-50%, -50%);
             font-size: 14px;
             font-weight: 800;
@@ -439,13 +342,12 @@
             -webkit-appearance: none;
             height: 4px;
             border-radius: 2px;
-            background: rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.25);
             outline: none;
         }
         .energy-slider::-webkit-slider-thumb {
             -webkit-appearance: none;
-            width: 16px;
-            height: 16px;
+            width: 16px; height: 16px;
             border-radius: 50%;
             background: #fff;
             cursor: pointer;
@@ -454,157 +356,92 @@
 
         /* Water */
         .water-section { margin-bottom: 20px; }
-        .water-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-        }
-        .water-cups {
-            display: flex;
-            gap: 6px;
-            justify-content: space-between;
-            margin-bottom: 12px;
-        }
+        .water-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+        .water-cups { display: flex; gap: 6px; justify-content: space-between; margin-bottom: 12px; }
         .cup {
-            width: 12%;
-            height: 30px;
-            border: 2px solid rgba(255,255,255,0.3);
+            width: 12%; height: 30px;
+            border: 2px solid rgba(255,255,255,0.25);
             border-radius: 4px 4px 8px 8px;
-            position: relative;
-            overflow: hidden;
+            position: relative; overflow: hidden;
             transition: var(--transition);
         }
-        .cup.filled { border-color: #00c6ff; }
+        .cup.filled { border-color: #4aa8ff; }
         .cup.filled::after {
             content: '';
             position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
+            bottom: 0; left: 0; right: 0;
             height: 100%;
-            background: linear-gradient(180deg, #00c6ff 0%, #0072ff 100%);
+            background: linear-gradient(180deg, #4aa8ff 0%, #2a78d8 100%);
             animation: fillUp 0.5s ease;
         }
         @keyframes fillUp { from { height: 0%; } to { height: 100%; } }
         
-        .water-text {
-            font-size: 13px;
-            color: var(--hint-color);
-            text-align: center;
-            margin-bottom: 12px;
-        }
+        .water-text { font-size: 13px; color: var(--hint-color); text-align: center; margin-bottom: 12px; }
         .btn-water {
-            width: 100%;
-            padding: 14px;
-            background: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
-            color: #fff;
-            border: none;
-            border-radius: 14px;
-            font-weight: 700;
-            font-size: 15px;
+            width: 100%; padding: 14px;
+            background: linear-gradient(135deg, #4aa8ff 0%, #2a78d8 100%);
+            color: #fff; border: none; border-radius: 14px;
+            font-weight: 700; font-size: 15px;
             cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0, 198, 255, 0.4);
+            box-shadow: 0 4px 12px rgba(74, 168, 255, 0.3);
             transition: var(--transition);
         }
         .btn-water:active { transform: scale(0.97); }
 
         /* Custom Items */
         .custom-section { margin-bottom: 20px; }
-        .custom-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-        }
+        .custom-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
         .btn-add {
             background: rgba(255,255,255,0.1);
-            color: #fff;
-            border: none;
-            padding: 8px 14px;
-            border-radius: 10px;
-            font-size: 12px;
-            font-weight: 600;
+            color: #fff; border: none;
+            padding: 8px 14px; border-radius: 10px;
+            font-size: 12px; font-weight: 600;
             cursor: pointer;
         }
         .custom-list { display: flex; flex-direction: column; gap: 8px; }
         .custom-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(255,255,255,0.08);
-            padding: 12px 14px;
-            border-radius: 12px;
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(255,255,255,0.06);
+            padding: 12px 14px; border-radius: 12px;
             font-size: 14px;
         }
         .custom-check {
-            width: 22px;
-            height: 22px;
+            width: 22px; height: 22px;
             border: 2px solid var(--hint-color);
             border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: var(--transition);
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: var(--transition);
         }
-        .custom-check.done {
-            background: var(--success-color);
-            border-color: var(--success-color);
-        }
-        .custom-check.done::after {
-            content: '✓';
-            color: #fff;
-            font-size: 14px;
-        }
+        .custom-check.done { background: var(--success-color); border-color: var(--success-color); }
+        .custom-check.done::after { content: '✓'; color: #fff; font-size: 14px; }
 
         /* Progress Circle */
         .progress-card {
             background: var(--card-bg);
             border-radius: var(--radius);
             padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            display: flex; flex-direction: column; align-items: center;
             margin-bottom: 20px;
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.08);
         }
-        .progress-wrapper {
-            position: relative;
-            width: 160px;
-            height: 160px;
-            margin-bottom: 12px;
-        }
-        .progress-wrapper svg {
-            transform: rotate(-90deg);
-            width: 100%;
-            height: 100%;
-        }
-        .progress-wrapper circle {
-            fill: none;
-            stroke-width: 12;
-            stroke-linecap: round;
-        }
-        .progress-bg { stroke: rgba(255,255,255,0.1); }
+        .progress-wrapper { position: relative; width: 160px; height: 160px; margin-bottom: 12px; }
+        .progress-wrapper svg { transform: rotate(-90deg); width: 100%; height: 100%; }
+        .progress-wrapper circle { fill: none; stroke-width: 12; stroke-linecap: round; }
+        .progress-bg { stroke: rgba(255,255,255,0.08); }
         .progress-bar {
             stroke: var(--button-color);
             stroke-dasharray: 440;
             stroke-dashoffset: 440;
             transition: stroke-dashoffset 1.2s ease;
-            filter: drop-shadow(0 0 10px rgba(10, 132, 255, 0.6));
+            filter: drop-shadow(0 0 10px rgba(94, 129, 244, 0.5));
         }
         .progress-text {
             position: absolute;
-            top: 50%;
-            left: 50%;
+            top: 50%; left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 28px;
-            font-weight: 800;
+            font-size: 28px; font-weight: 800;
         }
-        .progress-label {
-            font-size: 13px;
-            color: var(--hint-color);
-        }
+        .progress-label { font-size: 13px; color: var(--hint-color); }
 
         /* Analytics */
         .analytics-card {
@@ -612,7 +449,7 @@
             border-radius: var(--radius);
             padding: 16px;
             margin-bottom: 20px;
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.08);
         }
         .analytics-chart {
             display: flex;
@@ -624,8 +461,7 @@
         }
         .bar-col {
             flex: 1;
-            display: flex;
-            flex-direction: column;
+            display: flex; flex-direction: column;
             align-items: center;
             height: 100%;
             justify-content: flex-end;
@@ -636,43 +472,33 @@
             transition: height 0.8s cubic-bezier(0.4, 0, 0.2, 1);
             min-height: 4px;
         }
-        .bar.green { background: var(--success-color); box-shadow: 0 0 12px rgba(48, 209, 88, 0.5); }
-        .bar.yellow { background: var(--warning-color); box-shadow: 0 0 12px rgba(255, 214, 10, 0.5); }
-        .bar.red { background: var(--danger-color); box-shadow: 0 0 12px rgba(255, 69, 58, 0.5); }
-        .bar-label {
-            font-size: 10px;
-            color: var(--hint-color);
-            margin-top: 6px;
-            font-weight: 500;
-        }
+        .bar.green { background: var(--success-color); box-shadow: 0 0 12px rgba(52, 199, 89, 0.4); }
+        .bar.yellow { background: var(--warning-color); box-shadow: 0 0 12px rgba(255, 204, 0, 0.4); }
+        .bar.red { background: var(--danger-color); box-shadow: 0 0 12px rgba(255, 94, 94, 0.4); }
+        .bar-label { font-size: 10px; color: var(--hint-color); margin-top: 6px; font-weight: 500; }
 
         /* Month Goals */
         .goal-item {
-            display: flex;
-            align-items: center;
-            background: rgba(255,255,255,0.08);
-            padding: 16px;
-            border-radius: 14px;
+            display: flex; align-items: center;
+            background: rgba(255,255,255,0.06);
+            padding: 16px; border-radius: 14px;
             margin-bottom: 10px;
-            border: 2px solid rgba(255,255,255,0.1);
+            border: 2px solid rgba(255,255,255,0.08);
             transition: var(--transition);
             cursor: pointer;
             position: relative;
         }
         .goal-item:active { transform: scale(0.98); }
         .goal-item.completed {
-            background: linear-gradient(135deg, rgba(48, 209, 88, 0.35) 0%, rgba(48, 209, 88, 0.2) 100%);
+            background: linear-gradient(135deg, rgba(52, 199, 89, 0.3) 0%, rgba(52, 199, 89, 0.15) 100%);
             border-color: var(--success-color);
         }
         .goal-check {
-            width: 26px;
-            height: 26px;
+            width: 26px; height: 26px;
             border: 2px dashed var(--hint-color);
             border-radius: 8px;
             margin-right: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: flex; align-items: center; justify-content: center;
             transition: var(--transition);
         }
         .goal-item.completed .goal-check {
@@ -680,49 +506,23 @@
             border-style: solid;
             border-color: var(--success-color);
         }
-        .goal-item.completed .goal-check::after {
-            content: '✓';
-            color: #fff;
-            font-size: 18px;
-            font-weight: bold;
-        }
-        .goal-text {
-            flex-grow: 1;
-            font-size: 15px;
-            font-weight: 500;
-            transition: var(--transition);
-        }
-        .goal-item.completed .goal-text {
-            color: #fff;
-            font-weight: 700;
-        }
+        .goal-item.completed .goal-check::after { content: '✓'; color: #fff; font-size: 18px; font-weight: bold; }
+        .goal-text { flex-grow: 1; font-size: 15px; font-weight: 500; transition: var(--transition); }
+        .goal-item.completed .goal-text { color: #fff; font-weight: 700; }
         .goal-delete {
-            width: 30px;
-            height: 30px;
-            background: rgba(255, 69, 58, 0.2);
-            border: 1px solid rgba(255, 69, 58, 0.4);
+            width: 30px; height: 30px;
+            background: rgba(255, 94, 94, 0.15);
+            border: 1px solid rgba(255, 94, 94, 0.3);
             border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: flex; align-items: center; justify-content: center;
             cursor: pointer;
-            opacity: 0;
-            transform: scale(0.8);
+            opacity: 0; transform: scale(0.8);
             transition: var(--transition);
             margin-left: 8px;
         }
-        .goal-delete::after {
-            content: '🗑️';
-            font-size: 15px;
-        }
-        .goal-item.completed .goal-delete {
-            opacity: 1;
-            transform: scale(1);
-        }
-        .goal-delete:active {
-            background: rgba(255, 69, 58, 0.4);
-            transform: scale(0.9);
-        }
+        .goal-delete::after { content: '🗑️'; font-size: 15px; }
+        .goal-item.completed .goal-delete { opacity: 1; transform: scale(1); }
+        .goal-delete:active { background: rgba(255, 94, 94, 0.3); transform: scale(0.9); }
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
@@ -841,6 +641,43 @@
             </div>
         </div>
 
+        <!-- Energy Section for Week -->
+        <div class="card">
+            <h2>⚡ Энергия недели</h2>
+            <div class="energy-section">
+                <div class="energy-card energy-morning" onclick="selectEnergyWeek('morning', this)">
+                    <div class="star">✨</div>
+                    <div class="energy-label">🌅 Утро</div>
+                    <div class="energy-circle">
+                        <svg><circle class="energy-circle-bg" cx="35" cy="35" r="30"></circle><circle class="energy-circle-progress" id="energy-week-morning-circle" cx="35" cy="35" r="30"></circle></svg>
+                        <div class="energy-percent" id="energy-week-morning-text">50%</div>
+                    </div>
+                    <input type="range" min="0" max="100" value="50" class="energy-slider" oninput="updateEnergyWeek('morning', this.value)">
+                </div>
+                <div class="energy-card energy-day" onclick="selectEnergyWeek('day', this)">
+                    <div class="star">✨</div>
+                    <div class="star">✨</div>
+                    <div class="energy-label">☀️ День</div>
+                    <div class="energy-circle">
+                        <svg><circle class="energy-circle-bg" cx="35" cy="35" r="30"></circle><circle class="energy-circle-progress" id="energy-week-day-circle" cx="35" cy="35" r="30"></circle></svg>
+                        <div class="energy-percent" id="energy-week-day-text">50%</div>
+                    </div>
+                    <input type="range" min="0" max="100" value="50" class="energy-slider" oninput="updateEnergyWeek('day', this.value)">
+                </div>
+                <div class="energy-card energy-evening" onclick="selectEnergyWeek('evening', this)">
+                    <div class="star">✨</div>
+                    <div class="star">✨</div>
+                    <div class="star">✨</div>
+                    <div class="energy-label">🌙 Вечер</div>
+                    <div class="energy-circle">
+                        <svg><circle class="energy-circle-bg" cx="35" cy="35" r="30"></circle><circle class="energy-circle-progress" id="energy-week-evening-circle" cx="35" cy="35" r="30"></circle></svg>
+                        <div class="energy-percent" id="energy-week-evening-text">50%</div>
+                    </div>
+                    <input type="range" min="0" max="100" value="50" class="energy-slider" oninput="updateEnergyWeek('evening', this.value)">
+                </div>
+            </div>
+        </div>
+
         <div class="analytics-card">
             <h3>📊 Продуктивность недели</h3>
             <div class="analytics-chart" id="chart-week"></div>
@@ -877,12 +714,13 @@
         document.getElementById('date-display').innerText = now.toLocaleDateString('ru-RU', options);
 
         const daysShort = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
-        const emojis = ['📝', '', '🏃', '📚', '', '💡', '', '✨', '', ''];
+        const emojis = ['📝', '💼', '🏃', '', '🎯', '💡', '🔥', '✨', '💪', ''];
 
         let appData = JSON.parse(localStorage.getItem('plannerProData')) || {
             tasks: { day: [], week: [] },
             goals: { month: [] },
             energy: { morning: 50, day: 50, evening: 50 },
+            energyWeek: { morning: 50, day: 50, evening: 50 },
             water: 0,
             health: [],
             workout: [],
@@ -903,6 +741,7 @@
             renderWorkout();
             renderWater();
             renderEnergy();
+            renderEnergyWeek();
             renderProgress();
             renderChart('week');
             renderChart('month');
@@ -990,7 +829,7 @@
             renderDayTasks();
         }
 
-        // --- WEEK TASKS (with 7 day checkboxes) ---
+        // --- WEEK TASKS ---
         function addWeekTask() {
             const input = document.getElementById('new-task-week');
             if (input.value.trim() === '') return;
@@ -1058,9 +897,9 @@
             renderWeekTasks();
         }
 
-        // --- ENERGY ---
+        // --- ENERGY (DAY) ---
         function selectEnergy(period, el) {
-            document.querySelectorAll('.energy-card').forEach(c => c.classList.remove('selected'));
+            document.querySelectorAll('#day .energy-card').forEach(c => c.classList.remove('selected'));
             el.classList.add('selected');
             tg.HapticFeedback.selectionChanged();
         }
@@ -1084,6 +923,40 @@
                 const value = appData.energy[period] || 50;
                 const circle = document.getElementById(`energy-${period}-circle`);
                 const text = document.getElementById(`energy-${period}-text`);
+                const circumference = 188;
+                const offset = circumference - (circumference * value) / 100;
+                
+                circle.style.strokeDashoffset = offset;
+                text.innerText = `${value}%`;
+            });
+        }
+
+        // --- ENERGY (WEEK) ---
+        function selectEnergyWeek(period, el) {
+            document.querySelectorAll('#week .energy-card').forEach(c => c.classList.remove('selected'));
+            el.classList.add('selected');
+            tg.HapticFeedback.selectionChanged();
+        }
+
+        function updateEnergyWeek(period, value) {
+            appData.energyWeek[period] = parseInt(value);
+            
+            const circle = document.getElementById(`energy-week-${period}-circle`);
+            const text = document.getElementById(`energy-week-${period}-text`);
+            const circumference = 188;
+            const offset = circumference - (circumference * value) / 100;
+            
+            circle.style.strokeDashoffset = offset;
+            text.innerText = `${value}%`;
+            
+            saveData();
+        }
+
+        function renderEnergyWeek() {
+            ['morning', 'day', 'evening'].forEach(period => {
+                const value = appData.energyWeek[period] || 50;
+                const circle = document.getElementById(`energy-week-${period}-circle`);
+                const text = document.getElementById(`energy-week-${period}-text`);
                 const circumference = 188;
                 const offset = circumference - (circumference * value) / 100;
                 
