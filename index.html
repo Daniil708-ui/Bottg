@@ -9,7 +9,7 @@
     <style>
         :root {
             --bg-color: #1c1c1e;
-            --card-bg: rgba(44, 44, 46, 0.7);
+            --card-bg: rgba(44, 44, 46, 0.75);
             --text-color: #ffffff;
             --hint-color: #8e8e93;
             --button-color: #0a84ff;
@@ -21,20 +21,25 @@
         }
 
         body {
-            background: linear-gradient(180deg, #0f0f11 0%, #1c1c1e 100%);
+            background: 
+                linear-gradient(180deg, rgba(15,15,17,0.85) 0%, rgba(28,28,30,0.9) 100%),
+                url('https://i.pinimg.com/736x/89/1e/c6/891ec6d06a9c8b4b5f5e5d5c5b5a5958.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
             color: var(--text-color);
             font-family: 'Inter', sans-serif;
             margin: 0;
             padding: 16px 16px 40px 16px;
             font-size: 15px;
             -webkit-tap-highlight-color: transparent;
+            min-height: 100vh;
         }
 
         h1 { font-size: 26px; font-weight: 800; margin: 0 0 16px 0; letter-spacing: -0.5px; }
         h2 { font-size: 18px; font-weight: 700; margin: 0 0 12px 0; }
         h3 { font-size: 16px; font-weight: 600; margin: 0; }
 
-        /* Date Display */
         .date-display {
             font-size: 14px;
             color: var(--hint-color);
@@ -45,12 +50,13 @@
         /* Tabs */
         .tabs {
             display: flex;
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.1);
             padding: 4px;
             border-radius: 14px;
             margin-bottom: 20px;
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.1);
         }
         .tab-btn {
             flex: 1;
@@ -61,7 +67,7 @@
             cursor: pointer; transition: var(--transition);
         }
         .tab-btn.active {
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.2);
             color: var(--text-color);
             box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
@@ -75,24 +81,29 @@
             border-radius: var(--radius);
             padding: 16px;
             margin-bottom: 16px;
-            border: 1px solid rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.1);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
         }
 
-        /* Tasks with Time & Reminder */
+        /* Tasks */
         .task-list { display: flex; flex-direction: column; gap: 10px; }
         
         .task-item {
             display: flex; align-items: center;
-            background: rgba(255,255,255,0.06);
+            background: rgba(255,255,255,0.08);
             padding: 14px; border-radius: 14px;
             transition: var(--transition);
             cursor: pointer;
             border: 1px solid rgba(255,255,255,0.05);
+            position: relative;
         }
         .task-item:active { transform: scale(0.98); }
-        .task-item.completed { opacity: 0.5; }
+        .task-item.completed { 
+            opacity: 0.6; 
+            background: rgba(48, 209, 88, 0.15);
+            border-color: rgba(48, 209, 88, 0.3);
+        }
         .task-item.completed .task-text { text-decoration: line-through; }
         
         .task-checkbox {
@@ -118,6 +129,35 @@
             gap: 4px;
         }
 
+        /* Delete Button */
+        .delete-btn {
+            width: 32px;
+            height: 32px;
+            background: rgba(255, 69, 58, 0.2);
+            border: 1px solid rgba(255, 69, 58, 0.4);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: var(--transition);
+            margin-left: 8px;
+        }
+        .delete-btn::after {
+            content: '🗑️';
+            font-size: 16px;
+        }
+        .task-item.completed .delete-btn {
+            opacity: 1;
+            transform: scale(1);
+        }
+        .delete-btn:active {
+            background: rgba(255, 69, 58, 0.4);
+            transform: scale(0.9);
+        }
+
         .add-task-form { 
             display: flex; 
             gap: 8px; 
@@ -127,7 +167,7 @@
         .add-task-form input[type="text"] {
             flex-grow: 1; 
             min-width: 150px;
-            background: rgba(255,255,255,0.08); 
+            background: rgba(255,255,255,0.1); 
             border: none;
             color: #fff; 
             padding: 12px 14px; 
@@ -137,7 +177,7 @@
             outline: none;
         }
         .add-task-form input[type="time"] {
-            background: rgba(255,255,255,0.08); 
+            background: rgba(255,255,255,0.1); 
             border: none;
             color: #fff; 
             padding: 12px; 
@@ -174,7 +214,98 @@
             accent-color: var(--warning-color);
         }
 
-        /* Energy Cards with Sky Backgrounds */
+        /* Week Task with 7 Dots */
+        .week-task-item {
+            display: flex;
+            flex-direction: column;
+            background: rgba(255,255,255,0.08);
+            padding: 14px;
+            border-radius: 14px;
+            margin-bottom: 10px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .week-task-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .week-task-text {
+            flex-grow: 1;
+            font-size: 15px;
+            font-weight: 500;
+        }
+        .week-task-dots {
+            display: flex;
+            justify-content: space-between;
+            gap: 4px;
+            margin-top: 8px;
+        }
+        .week-dot {
+            flex: 1;
+            height: 32px;
+            border: 2px solid var(--hint-color);
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            background: rgba(255,255,255,0.05);
+        }
+        .week-dot:active { transform: scale(0.9); }
+        .week-dot.completed {
+            background: var(--success-color);
+            border-color: var(--success-color);
+        }
+        .week-dot-label {
+            font-size: 9px;
+            color: var(--hint-color);
+            margin-bottom: 2px;
+        }
+        .week-dot-check {
+            font-size: 14px;
+            color: transparent;
+        }
+        .week-dot.completed .week-dot-check {
+            color: #fff;
+        }
+        .week-dot.completed .week-dot-label {
+            color: #fff;
+        }
+        .week-task-delete {
+            width: 28px;
+            height: 28px;
+            background: rgba(255, 69, 58, 0.2);
+            border: 1px solid rgba(255, 69, 58, 0.4);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            margin-left: 8px;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: var(--transition);
+        }
+        .week-task-delete::after {
+            content: '🗑️';
+            font-size: 14px;
+        }
+        .week-task-item.all-done .week-task-delete {
+            opacity: 1;
+            transform: scale(1);
+        }
+        .week-task-item.all-done {
+            opacity: 0.6;
+            background: rgba(48, 209, 88, 0.15);
+            border-color: rgba(48, 209, 88, 0.3);
+        }
+        .week-task-item.all-done .week-task-text {
+            text-decoration: line-through;
+        }
+
+        /* Energy Cards */
         .energy-section {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -190,7 +321,7 @@
             align-items: center;
             position: relative;
             overflow: hidden;
-            min-height: 140px;
+            min-height: 150px;
             cursor: pointer;
             transition: var(--transition);
             border: 1px solid rgba(255,255,255,0.15);
@@ -202,9 +333,8 @@
             border-color: rgba(255,255,255,0.4);
         }
 
-        /* Sky Backgrounds */
         .energy-morning {
-            background: linear-gradient(180deg, #ffd89b 0%, #f9a875 50%, #ffecd2 100%);
+            background: linear-gradient(180deg, rgba(255,216,155,0.9) 0%, rgba(249,168,117,0.9) 50%, rgba(255,236,210,0.9) 100%);
             color: #5a3e2b;
         }
         .energy-morning::before {
@@ -218,7 +348,7 @@
         @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
         .energy-day {
-            background: linear-gradient(180deg, #4facfe 0%, #00f2fe 100%);
+            background: linear-gradient(180deg, rgba(79,172,254,0.9) 0%, rgba(0,242,254,0.9) 100%);
             color: #004d66;
         }
         .energy-day::before {
@@ -240,7 +370,7 @@
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
 
         .energy-evening {
-            background: linear-gradient(180deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            background: linear-gradient(180deg, rgba(15,12,41,0.95) 0%, rgba(48,43,99,0.95) 50%, rgba(36,36,62,0.95) 100%);
             color: #a8b5d6;
         }
         .energy-evening::before {
@@ -267,9 +397,11 @@
             margin-bottom: 8px;
             position: relative;
             z-index: 2;
+            display: flex;
+            align-items: center;
+            gap: 4px;
         }
 
-        /* Circular Progress for Energy */
         .energy-circle {
             position: relative;
             width: 70px;
@@ -286,9 +418,9 @@
             stroke-width: 6;
             stroke-linecap: round;
         }
-        .energy-circle-bg { stroke: rgba(255,255,255,0.2); }
+        .energy-circle-bg { stroke: rgba(255,255,255,0.3); }
         .energy-circle-progress {
-            stroke: rgba(255,255,255,0.9);
+            stroke: rgba(255,255,255,0.95);
             stroke-dasharray: 188;
             stroke-dashoffset: 188;
             transition: stroke-dashoffset 1s ease;
@@ -320,10 +452,8 @@
             box-shadow: 0 2px 6px rgba(0,0,0,0.3);
         }
 
-        /* Water Tracker */
-        .water-section {
-            margin-bottom: 20px;
-        }
+        /* Water */
+        .water-section { margin-bottom: 20px; }
         .water-header {
             display: flex;
             justify-content: space-between;
@@ -345,9 +475,7 @@
             overflow: hidden;
             transition: var(--transition);
         }
-        .cup.filled {
-            border-color: #00c6ff;
-        }
+        .cup.filled { border-color: #00c6ff; }
         .cup.filled::after {
             content: '';
             position: absolute;
@@ -381,10 +509,8 @@
         }
         .btn-water:active { transform: scale(0.97); }
 
-        /* Custom Items (Health & Training) */
-        .custom-section {
-            margin-bottom: 20px;
-        }
+        /* Custom Items */
+        .custom-section { margin-bottom: 20px; }
         .custom-header {
             display: flex;
             justify-content: space-between;
@@ -401,16 +527,12 @@
             font-weight: 600;
             cursor: pointer;
         }
-        .custom-list {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
+        .custom-list { display: flex; flex-direction: column; gap: 8px; }
         .custom-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(255,255,255,0.06);
+            background: rgba(255,255,255,0.08);
             padding: 12px 14px;
             border-radius: 12px;
             font-size: 14px;
@@ -436,7 +558,7 @@
             font-size: 14px;
         }
 
-        /* Progress Circle (Main) */
+        /* Progress Circle */
         .progress-card {
             background: var(--card-bg);
             border-radius: var(--radius);
@@ -445,7 +567,7 @@
             flex-direction: column;
             align-items: center;
             margin-bottom: 20px;
-            border: 1px solid rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.1);
         }
         .progress-wrapper {
             position: relative;
@@ -463,7 +585,7 @@
             stroke-width: 12;
             stroke-linecap: round;
         }
-        .progress-bg { stroke: rgba(255,255,255,0.08); }
+        .progress-bg { stroke: rgba(255,255,255,0.1); }
         .progress-bar {
             stroke: var(--button-color);
             stroke-dasharray: 440;
@@ -484,59 +606,13 @@
             color: var(--hint-color);
         }
 
-        /* Week Tasks with Days */
-        .week-grid {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 6px;
-            margin-bottom: 20px;
-        }
-        .week-day {
-            background: rgba(255,255,255,0.06);
-            border-radius: 12px;
-            padding: 10px 6px;
-            text-align: center;
-            border: 1px solid rgba(255,255,255,0.05);
-        }
-        .week-day-label {
-            font-size: 11px;
-            color: var(--hint-color);
-            margin-bottom: 6px;
-            font-weight: 600;
-        }
-        .week-day-check {
-            width: 20px;
-            height: 20px;
-            border: 2px solid var(--hint-color);
-            border-radius: 50%;
-            margin: 0 auto 4px auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-        .week-day-check.done {
-            background: var(--success-color);
-            border-color: var(--success-color);
-        }
-        .week-day-check.done::after {
-            content: '✓';
-            color: #fff;
-            font-size: 12px;
-        }
-        .week-day-count {
-            font-size: 10px;
-            color: var(--hint-color);
-        }
-
-        /* Analytics Bars */
+        /* Analytics */
         .analytics-card {
             background: var(--card-bg);
             border-radius: var(--radius);
             padding: 16px;
             margin-bottom: 20px;
-            border: 1px solid rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.1);
         }
         .analytics-chart {
             display: flex;
@@ -570,21 +646,22 @@
             font-weight: 500;
         }
 
-        /* Month Goals (Green Fill) */
+        /* Month Goals */
         .goal-item {
             display: flex;
             align-items: center;
-            background: rgba(255,255,255,0.06);
+            background: rgba(255,255,255,0.08);
             padding: 16px;
             border-radius: 14px;
             margin-bottom: 10px;
             border: 2px solid rgba(255,255,255,0.1);
             transition: var(--transition);
             cursor: pointer;
+            position: relative;
         }
         .goal-item:active { transform: scale(0.98); }
         .goal-item.completed {
-            background: linear-gradient(135deg, rgba(48, 209, 88, 0.3) 0%, rgba(48, 209, 88, 0.15) 100%);
+            background: linear-gradient(135deg, rgba(48, 209, 88, 0.35) 0%, rgba(48, 209, 88, 0.2) 100%);
             border-color: var(--success-color);
         }
         .goal-check {
@@ -616,8 +693,35 @@
             transition: var(--transition);
         }
         .goal-item.completed .goal-text {
-            color: var(--success-color);
+            color: #fff;
             font-weight: 700;
+        }
+        .goal-delete {
+            width: 30px;
+            height: 30px;
+            background: rgba(255, 69, 58, 0.2);
+            border: 1px solid rgba(255, 69, 58, 0.4);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: var(--transition);
+            margin-left: 8px;
+        }
+        .goal-delete::after {
+            content: '🗑️';
+            font-size: 15px;
+        }
+        .goal-item.completed .goal-delete {
+            opacity: 1;
+            transform: scale(1);
+        }
+        .goal-delete:active {
+            background: rgba(255, 69, 58, 0.4);
+            transform: scale(0.9);
         }
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
@@ -656,7 +760,7 @@
         <div class="energy-section">
             <div class="energy-card energy-morning" onclick="selectEnergy('morning', this)">
                 <div class="star">✨</div>
-                <div class="energy-label">Утро</div>
+                <div class="energy-label">🌅 Утро</div>
                 <div class="energy-circle">
                     <svg><circle class="energy-circle-bg" cx="35" cy="35" r="30"></circle><circle class="energy-circle-progress" id="energy-morning-circle" cx="35" cy="35" r="30"></circle></svg>
                     <div class="energy-percent" id="energy-morning-text">50%</div>
@@ -666,7 +770,7 @@
             <div class="energy-card energy-day" onclick="selectEnergy('day', this)">
                 <div class="star">✨</div>
                 <div class="star">✨</div>
-                <div class="energy-label">День</div>
+                <div class="energy-label">☀️ День</div>
                 <div class="energy-circle">
                     <svg><circle class="energy-circle-bg" cx="35" cy="35" r="30"></circle><circle class="energy-circle-progress" id="energy-day-circle" cx="35" cy="35" r="30"></circle></svg>
                     <div class="energy-percent" id="energy-day-text">50%</div>
@@ -677,7 +781,7 @@
                 <div class="star">✨</div>
                 <div class="star">✨</div>
                 <div class="star">✨</div>
-                <div class="energy-label">Вечер</div>
+                <div class="energy-label">🌙 Вечер</div>
                 <div class="energy-circle">
                     <svg><circle class="energy-circle-bg" cx="35" cy="35" r="30"></circle><circle class="energy-circle-progress" id="energy-evening-circle" cx="35" cy="35" r="30"></circle></svg>
                     <div class="energy-percent" id="energy-evening-text">50%</div>
@@ -686,7 +790,7 @@
             </div>
         </div>
 
-        <!-- Main Progress -->
+        <!-- Progress -->
         <div class="progress-card">
             <div class="progress-wrapper">
                 <svg><circle class="progress-bg" cx="80" cy="80" r="70"></circle><circle class="progress-bar" id="progress-circle" cx="80" cy="80" r="70"></circle></svg>
@@ -730,9 +834,9 @@
     <div id="week" class="section">
         <div class="card">
             <h2>📅 Задачи на неделю</h2>
-            <div class="week-grid" id="week-grid"></div>
+            <div class="task-list" id="task-list-week"></div>
             <div class="add-task-form">
-                <input type="text" id="new-task-week" placeholder="Задача...">
+                <input type="text" id="new-task-week" placeholder="Задача на неделю...">
                 <button class="add-btn" onclick="addWeekTask()">+</button>
             </div>
         </div>
@@ -768,15 +872,13 @@
             document.getElementById('greeting').innerText = `Привет, ${tg.initDataUnsafe.user.first_name}!`;
         }
 
-        // Set date
         const now = new Date();
         const options = { weekday: 'long', day: 'numeric', month: 'long' };
         document.getElementById('date-display').innerText = now.toLocaleDateString('ru-RU', options);
 
         const daysShort = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
-        const emojis = ['📝', '', '🏃', '📚', '🎯', '💡', '', '', '', ''];
+        const emojis = ['📝', '', '🏃', '📚', '', '💡', '', '✨', '', ''];
 
-        // Data
         let appData = JSON.parse(localStorage.getItem('plannerProData')) || {
             tasks: { day: [], week: [] },
             goals: { month: [] },
@@ -784,7 +886,6 @@
             water: 0,
             health: [],
             workout: [],
-            weekDays: [0, 0, 0, 0, 0, 0, 0],
             history: {}
         };
 
@@ -796,7 +897,7 @@
 
         function updateAll() {
             renderDayTasks();
-            renderWeekGrid();
+            renderWeekTasks();
             renderGoals();
             renderHealth();
             renderWorkout();
@@ -825,7 +926,6 @@
                 done: false
             });
             
-            // Send reminder to bot (placeholder)
             if (reminder && reminder.checked && timeInput.value) {
                 tg.showAlert(`⏰ Напоминание установлено на ${timeInput.value}`);
             }
@@ -849,7 +949,6 @@
             appData.tasks.day.forEach((task, i) => {
                 const div = document.createElement('div');
                 div.className = `task-item ${task.done ? 'completed' : ''}`;
-                div.onclick = () => toggleTask('day', i);
                 
                 let timeHtml = '';
                 if (task.time) {
@@ -860,11 +959,12 @@
                 }
                 
                 div.innerHTML = `
-                    <div class="task-checkbox ${task.done ? 'checked' : ''}"></div>
-                    <div class="task-content">
+                    <div class="task-checkbox ${task.done ? 'checked' : ''}" onclick="toggleTask('day', ${i})"></div>
+                    <div class="task-content" onclick="toggleTask('day', ${i})">
                         <div class="task-text">${task.emoji} ${task.text}</div>
                         ${timeHtml}
                     </div>
+                    <div class="delete-btn" onclick="deleteTask('day', ${i})" style="display: ${task.done ? 'flex' : 'none'}"></div>
                 `;
                 list.appendChild(div);
             });
@@ -883,45 +983,79 @@
             renderDayTasks();
         }
 
-        // --- WEEK TASKS ---
+        function deleteTask(period, index) {
+            tg.HapticFeedback.notificationOccurred('warning');
+            appData.tasks[period].splice(index, 1);
+            saveData();
+            renderDayTasks();
+        }
+
+        // --- WEEK TASKS (with 7 day checkboxes) ---
         function addWeekTask() {
             const input = document.getElementById('new-task-week');
             if (input.value.trim() === '') return;
             
+            const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
+            
             appData.tasks.week.push({
                 text: input.value,
+                emoji: randomEmoji,
                 days: [false, false, false, false, false, false, false]
             });
             
             input.value = '';
             saveData();
-            renderWeekGrid();
+            renderWeekTasks();
         }
 
-        function renderWeekGrid() {
-            const grid = document.getElementById('week-grid');
-            grid.innerHTML = '';
+        function renderWeekTasks() {
+            const list = document.getElementById('task-list-week');
+            list.innerHTML = '';
             
-            for (let i = 0; i < 7; i++) {
-                const dayDiv = document.createElement('div');
-                dayDiv.className = 'week-day';
-                
-                const completedCount = appData.tasks.week.filter(t => t.days[i]).length;
-                
-                dayDiv.innerHTML = `
-                    <div class="week-day-label">${daysShort[i]}</div>
-                    <div class="week-day-check ${appData.weekDays[i] ? 'done' : ''}" onclick="toggleWeekDay(${i})"></div>
-                    <div class="week-day-count">${completedCount}</div>
-                `;
-                grid.appendChild(dayDiv);
+            if (appData.tasks.week.length === 0) {
+                list.innerHTML = '<div style="text-align:center; color:var(--hint-color); padding:20px;">Нет задач на неделю</div>';
+                return;
             }
+            
+            appData.tasks.week.forEach((task, tIndex) => {
+                const div = document.createElement('div');
+                const allDone = task.days.every(d => d);
+                div.className = `week-task-item ${allDone ? 'all-done' : ''}`;
+                
+                let dotsHtml = '<div class="week-task-dots">';
+                task.days.forEach((done, dIndex) => {
+                    dotsHtml += `
+                        <div class="week-dot ${done ? 'completed' : ''}" onclick="event.stopPropagation(); toggleWeekTaskDay(${tIndex}, ${dIndex})">
+                            <span class="week-dot-label">${daysShort[dIndex]}</span>
+                            <span class="week-dot-check">✓</span>
+                        </div>
+                    `;
+                });
+                dotsHtml += '</div>';
+                
+                div.innerHTML = `
+                    <div class="week-task-header">
+                        <span class="week-task-text">${task.emoji} ${task.text}</span>
+                        <div class="week-task-delete" onclick="deleteWeekTask(${tIndex})" style="display: ${allDone ? 'flex' : 'none'}"></div>
+                    </div>
+                    ${dotsHtml}
+                `;
+                list.appendChild(div);
+            });
         }
 
-        function toggleWeekDay(dayIndex) {
+        function toggleWeekTaskDay(taskIndex, dayIndex) {
             tg.HapticFeedback.selectionChanged();
-            appData.weekDays[dayIndex] = !appData.weekDays[dayIndex];
+            appData.tasks.week[taskIndex].days[dayIndex] = !appData.tasks.week[taskIndex].days[dayIndex];
             saveData();
-            renderWeekGrid();
+            renderWeekTasks();
+        }
+
+        function deleteWeekTask(index) {
+            tg.HapticFeedback.notificationOccurred('warning');
+            appData.tasks.week.splice(index, 1);
+            saveData();
+            renderWeekTasks();
         }
 
         // --- ENERGY ---
@@ -992,13 +1126,8 @@
             }
         }
 
-        function renderHealth() {
-            renderCustomList('health', 'list-health');
-        }
-
-        function renderWorkout() {
-            renderCustomList('workout', 'list-workout');
-        }
+        function renderHealth() { renderCustomList('health', 'list-health'); }
+        function renderWorkout() { renderCustomList('workout', 'list-workout'); }
 
         function renderCustomList(category, elementId) {
             const list = document.getElementById(elementId);
@@ -1063,10 +1192,10 @@
             appData.goals.month.forEach((goal, i) => {
                 const div = document.createElement('div');
                 div.className = `goal-item ${goal.done ? 'completed' : ''}`;
-                div.onclick = () => toggleGoal(i);
                 div.innerHTML = `
-                    <div class="goal-check"></div>
-                    <span class="goal-text">${goal.text}</span>
+                    <div class="goal-check" onclick="toggleGoal(${i})"></div>
+                    <span class="goal-text" onclick="toggleGoal(${i})">${goal.text}</span>
+                    <div class="goal-delete" onclick="deleteGoal(${i})" style="display: ${goal.done ? 'flex' : 'none'}"></div>
                 `;
                 list.appendChild(div);
             });
@@ -1075,6 +1204,13 @@
         function toggleGoal(index) {
             tg.HapticFeedback.notificationOccurred('success');
             appData.goals.month[index].done = !appData.goals.month[index].done;
+            saveData();
+            renderGoals();
+        }
+
+        function deleteGoal(index) {
+            tg.HapticFeedback.notificationOccurred('warning');
+            appData.goals.month.splice(index, 1);
             saveData();
             renderGoals();
         }
@@ -1114,7 +1250,6 @@
             tg.HapticFeedback.impactOccurred('light');
         }
 
-        // Init
         updateAll();
     </script>
 </body>
