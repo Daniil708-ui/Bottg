@@ -8,7 +8,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Темно-серая палитра без черного */
             --bg-color: #2a2a2e;
             --bg-secondary: #3a3a3e;
             --card-bg: rgba(58, 58, 62, 0.8);
@@ -50,7 +49,6 @@
             font-weight: 500;
         }
 
-        /* Tabs */
         .tabs {
             display: flex;
             background: rgba(255, 255, 255, 0.08);
@@ -78,7 +76,6 @@
         .section { display: none; animation: fadeIn 0.4s ease; }
         .section.active { display: block; }
 
-        /* Cards */
         .card {
             background: var(--card-bg);
             border-radius: var(--radius);
@@ -89,7 +86,6 @@
             -webkit-backdrop-filter: blur(20px);
         }
 
-        /* Tasks */
         .task-list { display: flex; flex-direction: column; gap: 10px; }
         
         .task-item {
@@ -132,19 +128,14 @@
             gap: 4px;
         }
 
-        /* Delete Button */
         .delete-btn {
-            width: 32px;
-            height: 32px;
+            width: 32px; height: 32px;
             background: rgba(255, 94, 94, 0.15);
             border: 1px solid rgba(255, 94, 94, 0.3);
             border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: flex; align-items: center; justify-content: center;
             cursor: pointer;
-            opacity: 0;
-            transform: scale(0.8);
+            opacity: 0; transform: scale(0.8);
             transition: var(--transition);
             margin-left: 8px;
         }
@@ -178,7 +169,6 @@
             width: 18px; height: 18px; accent-color: var(--warning-color);
         }
 
-        /* Week Task with 7 Dots */
         .week-task-item {
             display: flex; flex-direction: column;
             background: rgba(255,255,255,0.06);
@@ -222,7 +212,6 @@
         }
         .week-task-item.all-done .week-task-text { text-decoration: line-through; }
 
-        /* Energy Cards */
         .energy-section {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -354,7 +343,6 @@
             box-shadow: 0 2px 6px rgba(0,0,0,0.3);
         }
 
-        /* Water */
         .water-section { margin-bottom: 20px; }
         .water-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
         .water-cups { display: flex; gap: 6px; justify-content: space-between; margin-bottom: 12px; }
@@ -388,7 +376,6 @@
         }
         .btn-water:active { transform: scale(0.97); }
 
-        /* Custom Items */
         .custom-section { margin-bottom: 20px; }
         .custom-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
         .btn-add {
@@ -415,7 +402,6 @@
         .custom-check.done { background: var(--success-color); border-color: var(--success-color); }
         .custom-check.done::after { content: '✓'; color: #fff; font-size: 14px; }
 
-        /* Progress Circle */
         .progress-card {
             background: var(--card-bg);
             border-radius: var(--radius);
@@ -443,7 +429,6 @@
         }
         .progress-label { font-size: 13px; color: var(--hint-color); }
 
-        /* Analytics */
         .analytics-card {
             background: var(--card-bg);
             border-radius: var(--radius);
@@ -477,7 +462,6 @@
         .bar.red { background: var(--danger-color); box-shadow: 0 0 12px rgba(255, 94, 94, 0.4); }
         .bar-label { font-size: 10px; color: var(--hint-color); margin-top: 6px; font-weight: 500; }
 
-        /* Month Goals */
         .goal-item {
             display: flex; align-items: center;
             background: rgba(255,255,255,0.06);
@@ -541,7 +525,6 @@
     <!-- ============ DAY SECTION ============ -->
     <div id="day" class="section active">
         
-        <!-- Tasks -->
         <div class="card">
             <h2>📋 Задачи</h2>
             <div class="task-list" id="task-list-day"></div>
@@ -556,7 +539,6 @@
             </label>
         </div>
 
-        <!-- Energy -->
         <div class="energy-section">
             <div class="energy-card energy-morning" onclick="selectEnergy('morning', this)">
                 <div class="star">✨</div>
@@ -590,7 +572,6 @@
             </div>
         </div>
 
-        <!-- Progress -->
         <div class="progress-card">
             <div class="progress-wrapper">
                 <svg><circle class="progress-bg" cx="80" cy="80" r="70"></circle><circle class="progress-bar" id="progress-circle" cx="80" cy="80" r="70"></circle></svg>
@@ -599,7 +580,6 @@
             <div class="progress-label">Прогресс дня (мин. 3 задачи)</div>
         </div>
 
-        <!-- Water -->
         <div class="card water-section">
             <div class="water-header">
                 <h3>💧 Вода</h3>
@@ -610,7 +590,6 @@
             <button class="btn-water" onclick="addWater()">+ Выпить стакан</button>
         </div>
 
-        <!-- Health -->
         <div class="card custom-section">
             <div class="custom-header">
                 <h3>🏥 Здоровье</h3>
@@ -619,7 +598,6 @@
             <div class="custom-list" id="list-health"></div>
         </div>
 
-        <!-- Training -->
         <div class="card custom-section">
             <div class="custom-header">
                 <h3>🏋️ Тренировка</h3>
@@ -638,43 +616,6 @@
             <div class="add-task-form">
                 <input type="text" id="new-task-week" placeholder="Задача на неделю...">
                 <button class="add-btn" onclick="addWeekTask()">+</button>
-            </div>
-        </div>
-
-        <!-- Energy Section for Week -->
-        <div class="card">
-            <h2>⚡ Энергия недели</h2>
-            <div class="energy-section">
-                <div class="energy-card energy-morning" onclick="selectEnergyWeek('morning', this)">
-                    <div class="star">✨</div>
-                    <div class="energy-label">🌅 Утро</div>
-                    <div class="energy-circle">
-                        <svg><circle class="energy-circle-bg" cx="35" cy="35" r="30"></circle><circle class="energy-circle-progress" id="energy-week-morning-circle" cx="35" cy="35" r="30"></circle></svg>
-                        <div class="energy-percent" id="energy-week-morning-text">50%</div>
-                    </div>
-                    <input type="range" min="0" max="100" value="50" class="energy-slider" oninput="updateEnergyWeek('morning', this.value)">
-                </div>
-                <div class="energy-card energy-day" onclick="selectEnergyWeek('day', this)">
-                    <div class="star">✨</div>
-                    <div class="star">✨</div>
-                    <div class="energy-label">☀️ День</div>
-                    <div class="energy-circle">
-                        <svg><circle class="energy-circle-bg" cx="35" cy="35" r="30"></circle><circle class="energy-circle-progress" id="energy-week-day-circle" cx="35" cy="35" r="30"></circle></svg>
-                        <div class="energy-percent" id="energy-week-day-text">50%</div>
-                    </div>
-                    <input type="range" min="0" max="100" value="50" class="energy-slider" oninput="updateEnergyWeek('day', this.value)">
-                </div>
-                <div class="energy-card energy-evening" onclick="selectEnergyWeek('evening', this)">
-                    <div class="star">✨</div>
-                    <div class="star">✨</div>
-                    <div class="star">✨</div>
-                    <div class="energy-label">🌙 Вечер</div>
-                    <div class="energy-circle">
-                        <svg><circle class="energy-circle-bg" cx="35" cy="35" r="30"></circle><circle class="energy-circle-progress" id="energy-week-evening-circle" cx="35" cy="35" r="30"></circle></svg>
-                        <div class="energy-percent" id="energy-week-evening-text">50%</div>
-                    </div>
-                    <input type="range" min="0" max="100" value="50" class="energy-slider" oninput="updateEnergyWeek('evening', this.value)">
-                </div>
             </div>
         </div>
 
@@ -720,7 +661,6 @@
             tasks: { day: [], week: [] },
             goals: { month: [] },
             energy: { morning: 50, day: 50, evening: 50 },
-            energyWeek: { morning: 50, day: 50, evening: 50 },
             water: 0,
             health: [],
             workout: [],
@@ -741,7 +681,6 @@
             renderWorkout();
             renderWater();
             renderEnergy();
-            renderEnergyWeek();
             renderProgress();
             renderChart('week');
             renderChart('month');
@@ -897,7 +836,7 @@
             renderWeekTasks();
         }
 
-        // --- ENERGY (DAY) ---
+        // --- ENERGY ---
         function selectEnergy(period, el) {
             document.querySelectorAll('#day .energy-card').forEach(c => c.classList.remove('selected'));
             el.classList.add('selected');
@@ -923,40 +862,6 @@
                 const value = appData.energy[period] || 50;
                 const circle = document.getElementById(`energy-${period}-circle`);
                 const text = document.getElementById(`energy-${period}-text`);
-                const circumference = 188;
-                const offset = circumference - (circumference * value) / 100;
-                
-                circle.style.strokeDashoffset = offset;
-                text.innerText = `${value}%`;
-            });
-        }
-
-        // --- ENERGY (WEEK) ---
-        function selectEnergyWeek(period, el) {
-            document.querySelectorAll('#week .energy-card').forEach(c => c.classList.remove('selected'));
-            el.classList.add('selected');
-            tg.HapticFeedback.selectionChanged();
-        }
-
-        function updateEnergyWeek(period, value) {
-            appData.energyWeek[period] = parseInt(value);
-            
-            const circle = document.getElementById(`energy-week-${period}-circle`);
-            const text = document.getElementById(`energy-week-${period}-text`);
-            const circumference = 188;
-            const offset = circumference - (circumference * value) / 100;
-            
-            circle.style.strokeDashoffset = offset;
-            text.innerText = `${value}%`;
-            
-            saveData();
-        }
-
-        function renderEnergyWeek() {
-            ['morning', 'day', 'evening'].forEach(period => {
-                const value = appData.energyWeek[period] || 50;
-                const circle = document.getElementById(`energy-week-${period}-circle`);
-                const text = document.getElementById(`energy-week-${period}-text`);
                 const circumference = 188;
                 const offset = circumference - (circumference * value) / 100;
                 
@@ -1088,29 +993,71 @@
             renderGoals();
         }
 
-        // --- ANALYTICS ---
+        // --- ANALYTICS (REAL DATA) ---
+        function getWeekNumber(date) {
+            const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+            const dayNum = d.getUTCDay() || 7;
+            d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+            const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+            return Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+        }
+
         function renderChart(period) {
             const container = document.getElementById(`chart-${period}`);
             container.innerHTML = '';
             
-            const count = period === 'week' ? 7 : 4;
-            const labels = period === 'week' ? daysShort : ['Нед 1', 'Нед 2', 'Нед 3', 'Нед 4'];
+            const today = new Date();
             
-            for (let i = 0; i < count; i++) {
-                const score = Math.floor(Math.random() * 10);
-                const height = Math.max(10, (score / 10) * 100);
+            if (period === 'week') {
+                const daysShort = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+                const startOfWeek = new Date(today);
+                startOfWeek.setDate(today.getDate() - today.getDay() + 1);
+                startOfWeek.setHours(0, 0, 0, 0);
                 
-                let color = 'red';
-                if (score > 4) color = 'yellow';
-                if (score > 7) color = 'green';
+                for (let i = 0; i < 7; i++) {
+                    const dayDate = new Date(startOfWeek);
+                    dayDate.setDate(startOfWeek.getDate() + i);
+                    const dateStr = dayDate.toISOString().split('T')[0];
+                    
+                    const completedCount = appData.history[dateStr] || 0;
+                    const height = Math.min(100, Math.max(10, completedCount * 20));
+                    
+                    let color = 'red';
+                    if (completedCount >= 3) color = 'yellow';
+                    if (completedCount >= 5) color = 'green';
+                    
+                    const col = document.createElement('div');
+                    col.className = 'bar-col';
+                    col.innerHTML = `
+                        <div class="bar ${color}" style="height: ${height}%"></div>
+                        <div class="bar-label">${daysShort[i]}</div>
+                    `;
+                    container.appendChild(col);
+                }
                 
-                const col = document.createElement('div');
-                col.className = 'bar-col';
-                col.innerHTML = `
-                    <div class="bar ${color}" style="height: ${height}%"></div>
-                    <div class="bar-label">${labels[i]}</div>
-                `;
-                container.appendChild(col);
+            } else if (period === 'month') {
+                const currentWeek = getWeekNumber(today);
+                
+                for (let i = 0; i < 4; i++) {
+                    const weekNum = currentWeek - 3 + i;
+                    const weekTasks = Object.entries(appData.history)
+                        .filter(([date]) => getWeekNumber(new Date(date)) === weekNum)
+                        .reduce((sum, [, count]) => sum + count, 0);
+                    
+                    const height = Math.min(100, Math.max(10, weekTasks * 5));
+                    
+                    let color = 'red';
+                    if (weekTasks >= 10) color = 'yellow';
+                    if (weekTasks >= 20) color = 'green';
+                    
+                    const col = document.createElement('div');
+                    col.className = 'bar-col';
+                    col.innerHTML = `
+                        <div class="bar ${color}" style="height: ${height}%"></div>
+                        <div class="bar-label">Нед ${i + 1}</div>
+                    `;
+                    container.appendChild(col);
+                }
             }
         }
 
