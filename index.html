@@ -15,7 +15,6 @@
             --radius: 24px;
             --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
             
-            /* Gradient Cards */
             --gradient-tasks: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             --gradient-energy: linear-gradient(135deg, #ff8a00 0%, #ff5858 100%);
             --gradient-water: linear-gradient(135deg, #0a84ff 0%, #0056b3 100%);
@@ -52,6 +51,16 @@
             font-weight: 500;
         }
 
+        .time-indicator {
+            font-size: 12px;
+            padding: 6px 12px;
+            background: rgba(255,255,255,0.15);
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 12px;
+            backdrop-filter: blur(10px);
+        }
+
         .tabs {
             display: flex;
             background: rgba(255, 255, 255, 0.08);
@@ -79,7 +88,6 @@
         .section { display: none; animation: fadeIn 0.4s ease; }
         .section.active { display: block; }
 
-        /* Colorful Cards */
         .card {
             border-radius: var(--radius);
             padding: 18px;
@@ -111,10 +119,7 @@
             border: 1px solid rgba(255,255,255,0.2);
         }
         .task-item:active { transform: scale(0.98); }
-        .task-item.completed { 
-            opacity: 0.7; 
-            background: rgba(255,255,255,0.25);
-        }
+        .task-item.completed { opacity: 0.7; background: rgba(255,255,255,0.25); }
         .task-item.completed .task-text { text-decoration: line-through; }
         
         .task-checkbox {
@@ -131,17 +136,12 @@
         .task-content { flex-grow: 1; }
         .task-text { font-size: 15px; margin-bottom: 4px; font-weight: 500; }
         .task-time { font-size: 11px; opacity: 0.8; display: flex; align-items: center; gap: 6px; }
-        .task-reminder { 
-            font-size: 10px; 
-            margin-left: 8px;
-            display: flex; 
-            align-items: center; 
-            gap: 4px;
-        }
+        .task-reminder { font-size: 10px; margin-left: 8px; display: flex; align-items: center; gap: 4px; }
 
         .delete-btn {
             width: 32px; height: 32px;
-            background: rgba(255,255,255,0.2);
+            background: rgba(255, 94, 94, 0.15);
+            border: 1px solid rgba(255, 94, 94, 0.4);
             border-radius: 8px;
             display: flex; align-items: center; justify-content: center;
             cursor: pointer;
@@ -151,6 +151,7 @@
         }
         .delete-btn::after { content: '🗑️'; font-size: 14px; }
         .task-item.completed .delete-btn { opacity: 1; transform: scale(1); }
+        .delete-btn:active { background: rgba(255, 94, 94, 0.3); transform: scale(0.9); }
 
         .add-task-form { display: flex; gap: 8px; margin-top: 12px; }
         .add-task-form input[type="text"] {
@@ -201,7 +202,6 @@
             accent-color: #fff;
         }
 
-        /* Week Task */
         .week-task-item {
             display: flex; flex-direction: column;
             background: rgba(255,255,255,0.15);
@@ -220,15 +220,19 @@
             align-items: center; justify-content: center;
             cursor: pointer;
             background: rgba(255,255,255,0.1);
+            transition: var(--transition);
         }
         .week-dot:active { transform: scale(0.9); }
-        .week-dot.completed { background: rgba(255,255,255,0.4); border-color: #fff; }
+        .week-dot.completed { background: rgba(52, 199, 89, 0.6); border-color: #34c759; }
         .week-dot-label { font-size: 8px; opacity: 0.8; margin-bottom: 2px; }
         .week-dot-check { font-size: 12px; opacity: 0; }
-        .week-dot.completed .week-dot-check { opacity: 1; }
+        .week-dot.completed .week-dot-check { opacity: 1; color: #fff; }
+        .week-dot.completed .week-dot-label { opacity: 1; color: #fff; }
+        
         .week-task-delete {
             width: 28px; height: 28px;
-            background: rgba(255,255,255,0.2);
+            background: rgba(255, 94, 94, 0.15);
+            border: 1px solid rgba(255, 94, 94, 0.4);
             border-radius: 6px;
             display: flex; align-items: center; justify-content: center;
             cursor: pointer;
@@ -238,10 +242,9 @@
         }
         .week-task-delete::after { content: '🗑️'; font-size: 13px; }
         .week-task-item.all-done .week-task-delete { opacity: 1; transform: scale(1); }
-        .week-task-item.all-done { opacity: 0.7; background: rgba(255,255,255,0.25); }
+        .week-task-item.all-done { opacity: 0.7; background: rgba(52, 199, 89, 0.25); border-color: rgba(52, 199, 89, 0.5); }
         .week-task-item.all-done .week-task-text { text-decoration: line-through; }
 
-        /* Energy Cards with Sky Animations */
         .energy-section {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -269,8 +272,15 @@
             box-shadow: 0 8px 24px rgba(0,0,0,0.4);
             border-color: rgba(255,255,255,0.5);
         }
+        .energy-card.auto-highlight {
+            animation: pulseHighlight 2s ease-in-out infinite;
+            border-color: rgba(255,255,255,0.8);
+        }
+        @keyframes pulseHighlight {
+            0%, 100% { box-shadow: 0 0 20px rgba(255,255,255,0.3); }
+            50% { box-shadow: 0 0 35px rgba(255,255,255,0.6); }
+        }
 
-        /* Morning Sky - Orange/Yellow with Sun */
         .energy-morning {
             background: linear-gradient(180deg, #ff9500 0%, #ff6b00 50%, #ff8c42 100%);
             color: #3a2a1a;
@@ -292,16 +302,8 @@
             border-radius: 20px;
             animation: cloudFloat 8s ease-in-out infinite;
         }
-        .energy-morning .cloud-1 {
-            width: 50px; height: 20px;
-            top: 50px; left: 10px;
-            animation-delay: 0s;
-        }
-        .energy-morning .cloud-2 {
-            width: 40px; height: 16px;
-            bottom: 60px; right: 10px;
-            animation-delay: 4s;
-        }
+        .energy-morning .cloud-1 { width: 50px; height: 20px; top: 50px; left: 10px; animation-delay: 0s; }
+        .energy-morning .cloud-2 { width: 40px; height: 16px; bottom: 60px; right: 10px; animation-delay: 4s; }
         @keyframes sunPulse {
             0%, 100% { transform: scale(1); box-shadow: 0 0 30px rgba(255, 215, 0, 0.8); }
             50% { transform: scale(1.1); box-shadow: 0 0 45px rgba(255, 215, 0, 1); }
@@ -311,7 +313,6 @@
             50% { transform: translateX(8px); }
         }
 
-        /* Day Sky - Blue with Clouds */
         .energy-day {
             background: linear-gradient(180deg, #4facfe 0%, #00a8ff 50%, #00c6ff 100%);
             color: #0a3a4a;
@@ -322,21 +323,9 @@
             border-radius: 20px;
             animation: cloudFloat 6s ease-in-out infinite;
         }
-        .energy-day .cloud-1 {
-            width: 55px; height: 22px;
-            top: 40px; left: 5px;
-            animation-delay: 0s;
-        }
-        .energy-day .cloud-2 {
-            width: 45px; height: 18px;
-            top: 65px; right: 8px;
-            animation-delay: 2s;
-        }
-        .energy-day .cloud-3 {
-            width: 38px; height: 15px;
-            bottom: 55px; left: 15px;
-            animation-delay: 4s;
-        }
+        .energy-day .cloud-1 { width: 55px; height: 22px; top: 40px; left: 5px; animation-delay: 0s; }
+        .energy-day .cloud-2 { width: 45px; height: 18px; top: 65px; right: 8px; animation-delay: 2s; }
+        .energy-day .cloud-3 { width: 38px; height: 15px; bottom: 55px; left: 15px; animation-delay: 4s; }
         .energy-day .sun-small {
             position: absolute;
             top: 12px;
@@ -348,7 +337,6 @@
             box-shadow: 0 0 20px rgba(255, 230, 109, 0.7);
         }
 
-        /* Evening Sky - Dark Purple with Moon and Stars */
         .energy-evening {
             background: linear-gradient(180deg, #2c1e4a 0%, #4a2c6a 50%, #1a1a3a 100%);
             color: #e8e0f5;
@@ -440,7 +428,6 @@
             box-shadow: 0 2px 6px rgba(0,0,0,0.3);
         }
 
-        /* Water */
         .water-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
         .water-cups { display: flex; gap: 6px; justify-content: space-between; margin-bottom: 12px; }
         .cup {
@@ -468,7 +455,6 @@
         }
         .btn-water:active { transform: scale(0.97); background: rgba(255,255,255,0.35); }
 
-        /* Custom Items */
         .custom-section { margin-bottom: 20px; }
         .custom-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
         .btn-add {
@@ -493,10 +479,9 @@
             display: flex; align-items: center; justify-content: center;
             cursor: pointer;
         }
-        .custom-check.done { background: rgba(255,255,255,0.5); border-color: #fff; }
+        .custom-check.done { background: rgba(52, 199, 89, 0.6); border-color: #34c759; }
         .custom-check.done::after { content: '✓'; color: #fff; font-size: 12px; }
 
-        /* Progress Circle */
         .progress-card {
             background: rgba(255,255,255,0.1);
             border-radius: var(--radius);
@@ -524,7 +509,6 @@
         }
         .progress-label { font-size: 12px; opacity: 0.8; }
 
-        /* Analytics */
         .analytics-chart {
             display: flex;
             justify-content: space-between;
@@ -551,7 +535,6 @@
         .bar.red { background: #ff5e5e; }
         .bar-label { font-size: 9px; margin-top: 6px; font-weight: 600; }
 
-        /* Month Goals */
         .goal-item {
             display: flex; align-items: center;
             background: rgba(255,255,255,0.15);
@@ -559,11 +542,13 @@
             margin-bottom: 10px;
             border: 1px solid rgba(255,255,255,0.2);
             cursor: pointer;
+            transition: var(--transition);
         }
         .goal-item:active { transform: scale(0.98); }
         .goal-item.completed {
-            background: rgba(255,255,255,0.3);
-            border-color: rgba(255,255,255,0.5);
+            background: linear-gradient(135deg, rgba(52, 199, 89, 0.5) 0%, rgba(52, 199, 89, 0.3) 100%);
+            border-color: rgba(52, 199, 89, 0.6);
+            box-shadow: 0 4px 20px rgba(52, 199, 89, 0.3);
         }
         .goal-check {
             width: 24px; height: 24px;
@@ -571,17 +556,21 @@
             border-radius: 7px;
             margin-right: 12px;
             display: flex; align-items: center; justify-content: center;
+            transition: var(--transition);
         }
         .goal-item.completed .goal-check {
-            background: rgba(255,255,255,0.4);
+            background: rgba(52, 199, 89, 0.8);
             border-style: solid;
+            border-color: #34c759;
         }
-        .goal-item.completed .goal-check::after { content: '✓'; color: #fff; font-size: 16px; }
+        .goal-item.completed .goal-check::after { content: '✓'; color: #fff; font-size: 16px; font-weight: bold; }
         .goal-text { flex-grow: 1; font-size: 15px; font-weight: 500; }
-        .goal-item.completed .goal-text { text-decoration: line-through; opacity: 0.8; }
+        .goal-item.completed .goal-text { text-decoration: line-through; opacity: 0.9; color: #fff; }
+        
         .goal-delete {
             width: 28px; height: 28px;
-            background: rgba(255,255,255,0.2);
+            background: rgba(255, 94, 94, 0.15);
+            border: 1px solid rgba(255, 94, 94, 0.4);
             border-radius: 7px;
             display: flex; align-items: center; justify-content: center;
             cursor: pointer;
@@ -591,6 +580,7 @@
         }
         .goal-delete::after { content: '🗑️'; font-size: 13px; }
         .goal-item.completed .goal-delete { opacity: 1; transform: scale(1); }
+        .goal-delete:active { background: rgba(255, 94, 94, 0.3); transform: scale(0.9); }
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
@@ -599,6 +589,7 @@
 
     <h1 id="greeting">Планировщик</h1>
     <div class="date-display" id="date-display"></div>
+    <div class="time-indicator" id="time-indicator">🕐 Определение времени...</div>
 
     <div class="tabs">
         <button class="tab-btn active" onclick="switchTab('day')">День</button>
@@ -609,7 +600,6 @@
     <!-- ============ DAY SECTION ============ -->
     <div id="day" class="section active">
         
-        <!-- Tasks Card -->
         <div class="card card-tasks">
             <h2>📋 Задачи</h2>
             <div class="task-list" id="task-list-day"></div>
@@ -624,11 +614,10 @@
             </label>
         </div>
 
-        <!-- Energy Section -->
         <div class="card card-energy">
             <h2 style="display:flex;align-items:center;gap:6px;">⚡ Энергия</h2>
             <div class="energy-section">
-                <div class="energy-card energy-morning" onclick="selectEnergy('morning', this)">
+                <div class="energy-card energy-morning" id="card-morning" onclick="selectEnergy('morning', this)">
                     <div class="sun"></div>
                     <div class="cloud cloud-1"></div>
                     <div class="cloud cloud-2"></div>
@@ -642,7 +631,7 @@
                     </div>
                     <input type="range" min="0" max="100" value="50" class="energy-slider" oninput="updateEnergy('morning', this.value)">
                 </div>
-                <div class="energy-card energy-day" onclick="selectEnergy('day', this)">
+                <div class="energy-card energy-day" id="card-day" onclick="selectEnergy('day', this)">
                     <div class="sun-small"></div>
                     <div class="cloud cloud-1"></div>
                     <div class="cloud cloud-2"></div>
@@ -657,7 +646,7 @@
                     </div>
                     <input type="range" min="0" max="100" value="50" class="energy-slider" oninput="updateEnergy('day', this.value)">
                 </div>
-                <div class="energy-card energy-evening" onclick="selectEnergy('evening', this)">
+                <div class="energy-card energy-evening" id="card-evening" onclick="selectEnergy('evening', this)">
                     <div class="moon"></div>
                     <div class="star star-1">✦</div>
                     <div class="star star-2">✦</div>
@@ -677,7 +666,6 @@
             </div>
         </div>
 
-        <!-- Progress -->
         <div class="progress-card">
             <div class="progress-wrapper">
                 <svg><circle class="progress-bg" cx="75" cy="75" r="65"></circle><circle class="progress-bar" id="progress-circle" cx="75" cy="75" r="65"></circle></svg>
@@ -686,7 +674,6 @@
             <div class="progress-label">Прогресс дня (мин. 3 задачи)</div>
         </div>
 
-        <!-- Water Card -->
         <div class="card card-water">
             <div class="water-header">
                 <h3>💧 Вода</h3>
@@ -697,7 +684,6 @@
             <button class="btn-water" onclick="addWater()">+ Выпить стакан</button>
         </div>
 
-        <!-- Health Card -->
         <div class="card card-health">
             <div class="custom-header">
                 <h3>🏥 Здоровье</h3>
@@ -706,7 +692,6 @@
             <div class="custom-list" id="list-health"></div>
         </div>
 
-        <!-- Workout Card -->
         <div class="card card-workout">
             <div class="custom-header">
                 <h3>🏋️ Тренировка</h3>
@@ -794,6 +779,47 @@
             renderChart('week');
             renderChart('month');
         }
+
+        // --- AUTO TIME DETECTION ---
+        function detectTimeOfDay() {
+            const hour = new Date().getHours();
+            const indicator = document.getElementById('time-indicator');
+            const cards = {
+                morning: document.getElementById('card-morning'),
+                day: document.getElementById('card-day'),
+                evening: document.getElementById('card-evening')
+            };
+            
+            // Remove auto-highlight from all
+            Object.values(cards).forEach(card => card.classList.remove('auto-highlight'));
+            
+            let currentTime = '';
+            let activePeriod = '';
+            
+            if (hour >= 5 && hour < 12) {
+                currentTime = '🌅 Доброе утро! (5:00 - 12:00)';
+                activePeriod = 'morning';
+            } else if (hour >= 12 && hour < 18) {
+                currentTime = '☀️ Добрый день! (12:00 - 18:00)';
+                activePeriod = 'day';
+            } else {
+                currentTime = '🌙 Добрый вечер! (18:00 - 5:00)';
+                activePeriod = 'evening';
+            }
+            
+            indicator.innerText = currentTime;
+            
+            // Auto-highlight current time card
+            if (cards[activePeriod]) {
+                cards[activePeriod].classList.add('auto-highlight');
+            }
+            
+            return activePeriod;
+        }
+
+        // Run on load and every minute
+        detectTimeOfDay();
+        setInterval(detectTimeOfDay, 60000);
 
         // --- DAY TASKS ---
         function addTask(period) {
@@ -947,7 +973,7 @@
 
         // --- ENERGY ---
         function selectEnergy(period, el) {
-            document.querySelectorAll('#day .energy-card').forEach(c => c.classList.remove('selected'));
+            document.querySelectorAll('#day .energy-card').forEach(c => c.classList.remove('selected', 'auto-highlight'));
             el.classList.add('selected');
             tg.HapticFeedback.selectionChanged();
         }
