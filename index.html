@@ -18,9 +18,9 @@
             /* Gradient Cards */
             --gradient-tasks: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             --gradient-energy: linear-gradient(135deg, #ff8a00 0%, #ff5858 100%);
-            --gradient-water: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            --gradient-health: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
-            --gradient-workout: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            --gradient-water: linear-gradient(135deg, #0a84ff 0%, #0056b3 100%);
+            --gradient-health: linear-gradient(135deg, #2d8c3a 0%, #1e5c26 100%);
+            --gradient-workout: linear-gradient(135deg, #c44569 0%, #a33252 100%);
             --gradient-goals: linear-gradient(135deg, #30cfd0 0%, #330867 100%);
             --gradient-analytics: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
         }
@@ -241,7 +241,7 @@
         .week-task-item.all-done { opacity: 0.7; background: rgba(255,255,255,0.25); }
         .week-task-item.all-done .week-task-text { text-decoration: line-through; }
 
-        /* Energy Cards */
+        /* Energy Cards with Sky Animations */
         .energy-section {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -257,10 +257,9 @@
             align-items: center;
             position: relative;
             overflow: hidden;
-            min-height: 160px;
+            min-height: 170px;
             cursor: pointer;
             transition: var(--transition);
-            background: rgba(255,255,255,0.2);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255,255,255,0.3);
         }
@@ -271,49 +270,114 @@
             border-color: rgba(255,255,255,0.5);
         }
 
+        /* Morning Sky - Orange/Yellow with Sun */
         .energy-morning {
-            background: linear-gradient(180deg, rgba(255,140,50,0.95) 0%, rgba(255,100,40,0.95) 100%);
+            background: linear-gradient(180deg, #ff9500 0%, #ff6b00 50%, #ff8c42 100%);
             color: #3a2a1a;
         }
-        .energy-morning::before {
-            content: '☀️';
+        .energy-morning .sun {
             position: absolute;
-            top: 10px; right: 10px;
-            font-size: 22px;
+            top: 15px;
+            right: 15px;
+            width: 35px;
+            height: 35px;
+            background: radial-gradient(circle, #fff7e6 0%, #ffd700 50%, #ff8c00 100%);
+            border-radius: 50%;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.8), 0 0 60px rgba(255, 140, 0, 0.5);
+            animation: sunPulse 3s ease-in-out infinite;
+        }
+        .energy-morning .cloud {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 20px;
+            animation: cloudFloat 8s ease-in-out infinite;
+        }
+        .energy-morning .cloud-1 {
+            width: 50px; height: 20px;
+            top: 50px; left: 10px;
+            animation-delay: 0s;
+        }
+        .energy-morning .cloud-2 {
+            width: 40px; height: 16px;
+            bottom: 60px; right: 10px;
+            animation-delay: 4s;
+        }
+        @keyframes sunPulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 30px rgba(255, 215, 0, 0.8); }
+            50% { transform: scale(1.1); box-shadow: 0 0 45px rgba(255, 215, 0, 1); }
+        }
+        @keyframes cloudFloat {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(8px); }
         }
 
+        /* Day Sky - Blue with Clouds */
         .energy-day {
-            background: linear-gradient(180deg, rgba(255,120,60,0.95) 0%, rgba(255,90,50,0.95) 100%);
-            color: #4a2a1a;
+            background: linear-gradient(180deg, #4facfe 0%, #00a8ff 50%, #00c6ff 100%);
+            color: #0a3a4a;
         }
-        .energy-day::before {
-            content: '⛅';
+        .energy-day .cloud {
             position: absolute;
-            top: 10px; right: 10px;
-            font-size: 22px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            animation: cloudFloat 6s ease-in-out infinite;
+        }
+        .energy-day .cloud-1 {
+            width: 55px; height: 22px;
+            top: 40px; left: 5px;
+            animation-delay: 0s;
+        }
+        .energy-day .cloud-2 {
+            width: 45px; height: 18px;
+            top: 65px; right: 8px;
+            animation-delay: 2s;
+        }
+        .energy-day .cloud-3 {
+            width: 38px; height: 15px;
+            bottom: 55px; left: 15px;
+            animation-delay: 4s;
+        }
+        .energy-day .sun-small {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 28px;
+            height: 28px;
+            background: radial-gradient(circle, #fffef0 0%, #ffe66d 100%);
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(255, 230, 109, 0.7);
         }
 
+        /* Evening Sky - Dark Purple with Moon and Stars */
         .energy-evening {
-            background: linear-gradient(180deg, rgba(200,80,60,0.95) 0%, rgba(180,60,50,0.95) 100%);
-            color: #ffe8e0;
+            background: linear-gradient(180deg, #2c1e4a 0%, #4a2c6a 50%, #1a1a3a 100%);
+            color: #e8e0f5;
         }
-        .energy-evening::before {
-            content: '🌙';
+        .energy-evening .moon {
             position: absolute;
-            top: 10px; right: 10px;
-            font-size: 22px;
+            top: 12px;
+            right: 12px;
+            width: 30px;
+            height: 30px;
+            background: radial-gradient(circle at 8px 8px, #f5f5f5 0%, #d4d4d4 100%);
+            border-radius: 50%;
+            box-shadow: 0 0 25px rgba(245, 245, 245, 0.6), inset -8px -4px 0 rgba(0,0,0,0.15);
         }
-
-        .star {
+        .energy-evening .star {
             position: absolute;
-            color: rgba(255,255,255,0.8);
+            color: rgba(255, 255, 255, 0.9);
             font-size: 10px;
-            animation: twinkle 2s infinite;
+            animation: twinkle 2.5s ease-in-out infinite;
         }
-        .star:nth-child(1) { top: 15px; left: 15px; animation-delay: 0s; }
-        .star:nth-child(2) { top: 25px; left: 35px; animation-delay: 0.5s; }
-        .star:nth-child(3) { bottom: 45px; left: 20px; animation-delay: 1s; }
-        @keyframes twinkle { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
+        .energy-evening .star-1 { top: 20px; left: 15px; animation-delay: 0s; }
+        .energy-evening .star-2 { top: 45px; left: 25px; animation-delay: 0.8s; }
+        .energy-evening .star-3 { top: 35px; right: 45px; animation-delay: 1.5s; }
+        .energy-evening .star-4 { bottom: 50px; left: 20px; animation-delay: 0.5s; }
+        .energy-evening .star-5 { bottom: 40px; right: 20px; animation-delay: 1.2s; }
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
 
         .energy-label {
             font-size: 12px;
@@ -322,6 +386,8 @@
             display: flex;
             align-items: center;
             gap: 4px;
+            position: relative;
+            z-index: 2;
         }
 
         .energy-lightning {
@@ -337,6 +403,7 @@
             position: relative;
             width: 65px; height: 65px;
             margin: 6px 0;
+            z-index: 2;
         }
         .energy-circle svg { transform: rotate(-90deg); width: 100%; height: 100%; }
         .energy-circle circle { fill: none; stroke-width: 6; stroke-linecap: round; }
@@ -362,6 +429,7 @@
             border-radius: 2px;
             background: rgba(255,255,255,0.3);
             outline: none;
+            z-index: 2;
         }
         .energy-slider::-webkit-slider-thumb {
             -webkit-appearance: none;
@@ -377,7 +445,7 @@
         .water-cups { display: flex; gap: 6px; justify-content: space-between; margin-bottom: 12px; }
         .cup {
             width: 12%; height: 28px;
-            border: 2px solid rgba(255,255,255,0.4);
+            border: 2px solid rgba(255,255,255,0.5);
             border-radius: 4px 4px 6px 6px;
             position: relative; overflow: hidden;
         }
@@ -387,13 +455,13 @@
             position: absolute;
             bottom: 0; left: 0; right: 0;
             height: 100%;
-            background: rgba(255,255,255,0.6);
+            background: rgba(255,255,255,0.7);
         }
-        .water-text { font-size: 12px; opacity: 0.9; text-align: center; margin-bottom: 12px; }
+        .water-text { font-size: 12px; opacity: 0.95; text-align: center; margin-bottom: 12px; font-weight: 500; }
         .btn-water {
             width: 100%; padding: 13px;
             background: rgba(255,255,255,0.25);
-            color: #fff; border: 1px solid rgba(255,255,255,0.3);
+            color: #fff; border: 1px solid rgba(255,255,255,0.4);
             border-radius: 14px;
             font-weight: 700; font-size: 14px;
             cursor: pointer;
@@ -404,8 +472,8 @@
         .custom-section { margin-bottom: 20px; }
         .custom-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
         .btn-add {
-            background: rgba(255,255,255,0.2);
-            color: #fff; border: 1px solid rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.25);
+            color: #fff; border: 1px solid rgba(255,255,255,0.4);
             padding: 7px 12px; border-radius: 10px;
             font-size: 11px; font-weight: 600;
             cursor: pointer;
@@ -413,19 +481,19 @@
         .custom-list { display: flex; flex-direction: column; gap: 8px; }
         .custom-item {
             display: flex; justify-content: space-between; align-items: center;
-            background: rgba(255,255,255,0.15);
+            background: rgba(255,255,255,0.2);
             padding: 11px 13px; border-radius: 12px;
             font-size: 14px;
-            border: 1px solid rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.25);
         }
         .custom-check {
             width: 20px; height: 20px;
-            border: 2px solid rgba(255,255,255,0.5);
+            border: 2px solid rgba(255,255,255,0.6);
             border-radius: 5px;
             display: flex; align-items: center; justify-content: center;
             cursor: pointer;
         }
-        .custom-check.done { background: rgba(255,255,255,0.4); border-color: #fff; }
+        .custom-check.done { background: rgba(255,255,255,0.5); border-color: #fff; }
         .custom-check.done::after { content: '✓'; color: #fff; font-size: 12px; }
 
         /* Progress Circle */
@@ -442,11 +510,11 @@
         .progress-wrapper circle { fill: none; stroke-width: 12; stroke-linecap: round; }
         .progress-bg { stroke: rgba(255,255,255,0.15); }
         .progress-bar {
-            stroke: #fff;
+            stroke: #34c759;
             stroke-dasharray: 408;
             stroke-dashoffset: 408;
             transition: stroke-dashoffset 1.2s ease;
-            filter: drop-shadow(0 0 10px rgba(255,255,255,0.5));
+            filter: drop-shadow(0 0 10px rgba(52, 199, 89, 0.6));
         }
         .progress-text {
             position: absolute;
@@ -561,8 +629,9 @@
             <h2 style="display:flex;align-items:center;gap:6px;">⚡ Энергия</h2>
             <div class="energy-section">
                 <div class="energy-card energy-morning" onclick="selectEnergy('morning', this)">
-                    <div class="star">✨</div>
-                    <div class="star">✨</div>
+                    <div class="sun"></div>
+                    <div class="cloud cloud-1"></div>
+                    <div class="cloud cloud-2"></div>
                     <div class="energy-label">
                         <span class="energy-lightning">⚡</span>
                         <span>🌅 Утро</span>
@@ -574,9 +643,10 @@
                     <input type="range" min="0" max="100" value="50" class="energy-slider" oninput="updateEnergy('morning', this.value)">
                 </div>
                 <div class="energy-card energy-day" onclick="selectEnergy('day', this)">
-                    <div class="star">✨</div>
-                    <div class="star">✨</div>
-                    <div class="star">✨</div>
+                    <div class="sun-small"></div>
+                    <div class="cloud cloud-1"></div>
+                    <div class="cloud cloud-2"></div>
+                    <div class="cloud cloud-3"></div>
                     <div class="energy-label">
                         <span class="energy-lightning">⚡</span>
                         <span>☀️ День</span>
@@ -588,8 +658,12 @@
                     <input type="range" min="0" max="100" value="50" class="energy-slider" oninput="updateEnergy('day', this.value)">
                 </div>
                 <div class="energy-card energy-evening" onclick="selectEnergy('evening', this)">
-                    <div class="star">✨</div>
-                    <div class="star">✨</div>
+                    <div class="moon"></div>
+                    <div class="star star-1">✦</div>
+                    <div class="star star-2">✦</div>
+                    <div class="star star-3">✦</div>
+                    <div class="star star-4">✦</div>
+                    <div class="star star-5">✦</div>
                     <div class="energy-label">
                         <span class="energy-lightning">⚡</span>
                         <span>🌙 Вечер</span>
@@ -616,7 +690,7 @@
         <div class="card card-water">
             <div class="water-header">
                 <h3>💧 Вода</h3>
-                <span style="font-size: 12px; opacity: 0.9;" id="water-count">0/8</span>
+                <span style="font-size: 12px; opacity: 0.95; font-weight: 600;" id="water-count">0/8</span>
             </div>
             <div class="water-cups" id="water-cups"></div>
             <div class="water-text">Поддерживай водный баланс</div>
