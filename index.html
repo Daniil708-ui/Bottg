@@ -1128,7 +1128,7 @@
             renderGoals();
         }
 
-        // --- ANALYTICS ---
+// --- ANALYTICS ---
 function getWeekNumber(date) {
     const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
     const dayNum = d.getUTCDay() || 7;
@@ -1148,7 +1148,7 @@ function renderChart(period) {
     const today = new Date();
     
     if (period === 'week') {
-        // НЕДЕЛЯ: Пн-Вс текущей календарной недели
+        // НЕДЕЛЯ: Пн-Вс текущей календарной недели (по дням)
         const currentDay = today.getDay() || 7;
         const startOfWeek = new Date(today);
         startOfWeek.setDate(today.getDate() - currentDay + 1);
@@ -1176,36 +1176,40 @@ function renderChart(period) {
         }
         
     } else if (period === 'month') {
-        // МЕСЯЦ: Дни с 1-го числа до сегодня
+        // МЕСЯЦ: 4 недели текущего месяца (статистика по неделям)
         const year = today.getFullYear();
         const month = today.getMonth();
         const daysInMonth = getDaysInMonth(year, month);
         const currentDay = today.getDate();
         
-        const displayDays = Math.min(currentDay, 10);
-        const step = Math.ceil(currentDay / 10);
+        // Разбиваем месяц на 4 недели
+        const weeks = 4;
+        const daysPerWeek = Math.ceil(daysInMonth / weeks);
         
-        for (let i = 0; i < displayDays; i++) {
-            const dayNum = (i * step) + 1;
-            if (dayNum > currentDay) break;
+        for (let w = 0; w < weeks; w++) {
+            const weekStart = (w * daysPerWeek) + 1;
+            const weekEnd = Math.min((w + 1) * daysPerWeek, currentDay);
             
-            let periodTasks = 0;
-            for (let d = dayNum; d < dayNum + step && d <= currentDay; d++) {
+            if (weekStart > currentDay) break;
+            
+            // Считаем задачи за неделю
+            let weekTasks = 0;
+            for (let d = weekStart; d <= weekEnd; d++) {
                 const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
-                periodTasks += appData.history[dateStr] || 0;
+                weekTasks += appData.history[dateStr] || 0;
             }
             
-            const height = Math.min(100, Math.max(10, periodTasks * 3));
+            const height = Math.min(100, Math.max(10, weekTasks * 4));
             
             let color = 'red';
-            if (periodTasks >= 5) color = 'yellow';
-            if (periodTasks >= 10) color = 'green';
+            if (weekTasks >= 15) color = 'yellow';
+            if (weekTasks >= 25) color = 'green';
             
             const col = document.createElement('div');
             col.className = 'bar-col';
             col.innerHTML = `
                 <div class="bar ${color}" style="height: ${height}%"></div>
-                <div class="bar-label">${dayNum}</div>
+                <div class="bar-label">Нед ${w + 1}</div>
             `;
             container.appendChild(col);
         }
