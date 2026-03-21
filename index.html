@@ -124,14 +124,23 @@
         
         .task-checkbox {
             width: 24px; height: 24px;
-            border: 2px solid rgba(255,255,255,0.8);
+            border: 2px solid rgba(255,255,255,0.6);
             border-radius: 50%;
             margin-right: 12px;
             display: flex; align-items: center; justify-content: center;
             flex-shrink: 0; transition: var(--transition);
         }
-        .task-checkbox.checked { background: #fff; }
-        .task-checkbox.checked::after { content: '✓'; color: #667eea; font-size: 14px; font-weight: bold; }
+        .task-checkbox.checked { 
+            background: #34c759; 
+            border-color: #34c759;
+            box-shadow: 0 0 10px rgba(52, 199, 89, 0.6);
+        }
+        .task-checkbox.checked::after { 
+            content: '✓'; 
+            color: #fff; 
+            font-size: 14px; 
+            font-weight: bold; 
+        }
         
         .task-content { flex-grow: 1; }
         .task-text { font-size: 15px; margin-bottom: 4px; font-weight: 500; }
@@ -140,18 +149,27 @@
 
         .delete-btn {
             width: 32px; height: 32px;
-            background: rgba(255, 94, 94, 0.15);
-            border: 1px solid rgba(255, 94, 94, 0.4);
+            background: rgba(255, 59, 48, 0.3);
+            border: 1px solid rgba(255, 59, 48, 0.6);
             border-radius: 8px;
             display: flex; align-items: center; justify-content: center;
             cursor: pointer;
             opacity: 0; transform: scale(0.8);
             transition: var(--transition);
             margin-left: 8px;
+            box-shadow: 0 2px 8px rgba(255, 59, 48, 0.3);
         }
-        .delete-btn::after { content: '🗑️'; font-size: 14px; }
+        .delete-btn::after { content: '🗑️'; font-size: 15px; filter: brightness(1.2); }
         .task-item.completed .delete-btn { opacity: 1; transform: scale(1); }
-        .delete-btn:active { background: rgba(255, 94, 94, 0.3); transform: scale(0.9); }
+        .delete-btn:hover { 
+            background: rgba(255, 59, 48, 0.5); 
+            box-shadow: 0 4px 12px rgba(255, 59, 48, 0.5);
+        }
+        .delete-btn:active { 
+            background: rgba(255, 59, 48, 0.7); 
+            transform: scale(0.9); 
+            box-shadow: 0 2px 6px rgba(255, 59, 48, 0.4);
+        }
 
         .add-task-form { display: flex; gap: 8px; margin-top: 12px; }
         .add-task-form input[type="text"] {
@@ -223,7 +241,11 @@
             transition: var(--transition);
         }
         .week-dot:active { transform: scale(0.9); }
-        .week-dot.completed { background: rgba(52, 199, 89, 0.6); border-color: #34c759; }
+        .week-dot.completed { 
+            background: #34c759; 
+            border-color: #34c759;
+            box-shadow: 0 0 8px rgba(52, 199, 89, 0.6);
+        }
         .week-dot-label { font-size: 8px; opacity: 0.8; margin-bottom: 2px; }
         .week-dot-check { font-size: 12px; opacity: 0; }
         .week-dot.completed .week-dot-check { opacity: 1; color: #fff; }
@@ -231,19 +253,24 @@
         
         .week-task-delete {
             width: 28px; height: 28px;
-            background: rgba(255, 94, 94, 0.15);
-            border: 1px solid rgba(255, 94, 94, 0.4);
+            background: rgba(255, 59, 48, 0.3);
+            border: 1px solid rgba(255, 59, 48, 0.6);
             border-radius: 6px;
             display: flex; align-items: center; justify-content: center;
             cursor: pointer;
             opacity: 0; transform: scale(0.8);
             transition: var(--transition);
             margin-left: 8px;
+            box-shadow: 0 2px 8px rgba(255, 59, 48, 0.3);
         }
-        .week-task-delete::after { content: '🗑️'; font-size: 13px; }
+        .week-task-delete::after { content: '🗑️'; font-size: 13px; filter: brightness(1.2); }
         .week-task-item.all-done .week-task-delete { opacity: 1; transform: scale(1); }
         .week-task-item.all-done { opacity: 0.7; background: rgba(52, 199, 89, 0.25); border-color: rgba(52, 199, 89, 0.5); }
         .week-task-item.all-done .week-task-text { text-decoration: line-through; }
+        .week-task-delete:hover {
+            background: rgba(255, 59, 48, 0.5);
+            box-shadow: 0 4px 12px rgba(255, 59, 48, 0.5);
+        }
 
         .energy-section {
             display: grid;
@@ -569,18 +596,26 @@
         
         .goal-delete {
             width: 28px; height: 28px;
-            background: rgba(255, 94, 94, 0.15);
-            border: 1px solid rgba(255, 94, 94, 0.4);
+            background: rgba(255, 59, 48, 0.3);
+            border: 1px solid rgba(255, 59, 48, 0.6);
             border-radius: 7px;
             display: flex; align-items: center; justify-content: center;
             cursor: pointer;
             opacity: 0; transform: scale(0.8);
             transition: var(--transition);
             margin-left: 8px;
+            box-shadow: 0 2px 8px rgba(255, 59, 48, 0.3);
         }
-        .goal-delete::after { content: '🗑️'; font-size: 13px; }
+        .goal-delete::after { content: '🗑️'; font-size: 13px; filter: brightness(1.2); }
         .goal-item.completed .goal-delete { opacity: 1; transform: scale(1); }
-        .goal-delete:active { background: rgba(255, 94, 94, 0.3); transform: scale(0.9); }
+        .goal-delete:hover {
+            background: rgba(255, 59, 48, 0.5);
+            box-shadow: 0 4px 12px rgba(255, 59, 48, 0.5);
+        }
+        .goal-delete:active {
+            background: rgba(255, 59, 48, 0.7);
+            transform: scale(0.9);
+        }
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
@@ -758,7 +793,8 @@
             water: 0,
             health: [],
             workout: [],
-            history: {}
+            history: {},
+            lastOpenDate: null
         };
 
         function saveData() {
@@ -780,6 +816,45 @@
             renderChart('month');
         }
 
+        // --- AUTO DAILY RESET ---
+        function checkDailyReset() {
+            const today = new Date().toISOString().split('T')[0];
+            const lastOpen = appData.lastOpenDate;
+            
+            if (lastOpen !== today) {
+                let resetMessage = '';
+                
+                if (appData.water > 0) {
+                    appData.water = 0;
+                    resetMessage += '💧 Вода сброшена\n';
+                }
+                
+                const completedCount = appData.tasks.day.filter(t => t.done).length;
+                if (completedCount > 0) {
+                    appData.tasks.day = appData.tasks.day.filter(t => !t.done);
+                    resetMessage += `🗑️ Удалено ${completedCount} выполненных задач\n`;
+                }
+                
+                if (appData.health.some(h => h.done)) {
+                    appData.health.forEach(h => h.done = false);
+                    resetMessage += '🏥 Привычки сброшены\n';
+                }
+                if (appData.workout.some(w => w.done)) {
+                    appData.workout.forEach(w => w.done = false);
+                    resetMessage += '🏋️ Тренировки сброшены\n';
+                }
+                
+                appData.lastOpenDate = today;
+                saveData();
+                
+                if (resetMessage) {
+                    setTimeout(() => {
+                        tg.showAlert('🌅 **Новый день!**\n\n' + resetMessage + '\n✅ Всё готово к новому дню!');
+                    }, 500);
+                }
+            }
+        }
+
         // --- AUTO TIME DETECTION ---
         function detectTimeOfDay() {
             const hour = new Date().getHours();
@@ -790,7 +865,6 @@
                 evening: document.getElementById('card-evening')
             };
             
-            // Remove auto-highlight from all
             Object.values(cards).forEach(card => card.classList.remove('auto-highlight'));
             
             let currentTime = '';
@@ -809,7 +883,6 @@
             
             indicator.innerText = currentTime;
             
-            // Auto-highlight current time card
             if (cards[activePeriod]) {
                 cards[activePeriod].classList.add('auto-highlight');
             }
@@ -817,7 +890,7 @@
             return activePeriod;
         }
 
-        // Run on load and every minute
+        checkDailyReset();
         detectTimeOfDay();
         setInterval(detectTimeOfDay, 60000);
 
@@ -1128,93 +1201,95 @@
             renderGoals();
         }
 
-// --- ANALYTICS ---
-function getWeekNumber(date) {
-    const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
-    const dayNum = d.getUTCDay() || 7;
-    d.setUTCDate(d.getUTCDate() + 4 - dayNum);
-    const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
-    return Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
-}
-
-function getDaysInMonth(year, month) {
-    return new Date(year, month + 1, 0).getDate();
-}
-
-function renderChart(period) {
-    const container = document.getElementById(`chart-${period}`);
-    container.innerHTML = '';
-    
-    const today = new Date();
-    
-    if (period === 'week') {
-        // НЕДЕЛЯ: Пн-Вс текущей календарной недели (по дням)
-        const currentDay = today.getDay() || 7;
-        const startOfWeek = new Date(today);
-        startOfWeek.setDate(today.getDate() - currentDay + 1);
-        startOfWeek.setHours(0, 0, 0, 0);
-        
-        for (let i = 0; i < 7; i++) {
-            const dayDate = new Date(startOfWeek);
-            dayDate.setDate(startOfWeek.getDate() + i);
-            const dateStr = dayDate.toISOString().split('T')[0];
-            
-            const completedCount = appData.history[dateStr] || 0;
-            const height = Math.min(100, Math.max(10, completedCount * 20));
-            
-            let color = 'red';
-            if (completedCount >= 3) color = 'yellow';
-            if (completedCount >= 5) color = 'green';
-            
-            const col = document.createElement('div');
-            col.className = 'bar-col';
-            col.innerHTML = `
-                <div class="bar ${color}" style="height: ${height}%"></div>
-                <div class="bar-label">${daysShort[i]}</div>
-            `;
-            container.appendChild(col);
+        // --- ANALYTICS ---
+        function getWeekNumber(date) {
+            const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+            const dayNum = d.getUTCDay() || 7;
+            d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+            const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+            return Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
         }
-        
-    } else if (period === 'month') {
-        // МЕСЯЦ: 4 недели текущего месяца (статистика по неделям)
-        const year = today.getFullYear();
-        const month = today.getMonth();
-        const daysInMonth = getDaysInMonth(year, month);
-        const currentDay = today.getDate();
-        
-        // Разбиваем месяц на 4 недели
-        const weeks = 4;
-        const daysPerWeek = Math.ceil(daysInMonth / weeks);
-        
-        for (let w = 0; w < weeks; w++) {
-            const weekStart = (w * daysPerWeek) + 1;
-            const weekEnd = Math.min((w + 1) * daysPerWeek, currentDay);
+
+        function getDaysInMonth(year, month) {
+            return new Date(year, month + 1, 0).getDate();
+        }
+
+        function renderChart(period) {
+            const container = document.getElementById(`chart-${period}`);
+            container.innerHTML = '';
             
-            if (weekStart > currentDay) break;
+            const today = new Date();
             
-            // Считаем задачи за неделю
-            let weekTasks = 0;
-            for (let d = weekStart; d <= weekEnd; d++) {
-                const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
-                weekTasks += appData.history[dateStr] || 0;
+            if (period === 'week') {
+                const currentDay = today.getDay() || 7;
+                const startOfWeek = new Date(today);
+                startOfWeek.setDate(today.getDate() - currentDay + 1);
+                startOfWeek.setHours(0, 0, 0, 0);
+                
+                for (let i = 0; i < 7; i++) {
+                    const dayDate = new Date(startOfWeek);
+                    dayDate.setDate(startOfWeek.getDate() + i);
+                    const dateStr = dayDate.toISOString().split('T')[0];
+                    
+                    const completedCount = appData.history[dateStr] || 0;
+                    const height = Math.min(100, Math.max(10, completedCount * 20));
+                    
+                    let color = 'red';
+                    if (completedCount >= 3) color = 'yellow';
+                    if (completedCount >= 5) color = 'green';
+                    
+                    const col = document.createElement('div');
+                    col.className = 'bar-col';
+                    col.innerHTML = `
+                        <div class="bar ${color}" style="height: ${height}%"></div>
+                        <div class="bar-label">${daysShort[i]}</div>
+                    `;
+                    container.appendChild(col);
+                }
+                
+            } else if (period === 'month') {
+                const year = today.getFullYear();
+                const month = today.getMonth();
+                const daysInMonth = getDaysInMonth(year, month);
+                const currentDay = today.getDate();
+                
+                const weeks = 4;
+                const daysPerWeek = Math.ceil(daysInMonth / weeks);
+                
+                for (let w = 0; w < weeks; w++) {
+                    const weekStart = (w * daysPerWeek) + 1;
+                    const weekEnd = Math.min((w + 1) * daysPerWeek, daysInMonth);
+                    
+                    const isFuture = weekStart > currentDay;
+                    
+                    let weekTasks = 0;
+                    if (!isFuture) {
+                        for (let d = weekStart; d <= Math.min(weekEnd, currentDay); d++) {
+                            const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+                            weekTasks += appData.history[dateStr] || 0;
+                        }
+                    }
+                    
+                    const height = isFuture ? 10 : Math.min(100, Math.max(10, weekTasks * 4));
+                    
+                    let color = 'red';
+                    if (!isFuture) {
+                        if (weekTasks >= 15) color = 'yellow';
+                        if (weekTasks >= 25) color = 'green';
+                    } else {
+                        color = 'gray';
+                    }
+                    
+                    const col = document.createElement('div');
+                    col.className = 'bar-col';
+                    col.innerHTML = `
+                        <div class="bar ${color}" style="height: ${height}%; opacity: ${isFuture ? 0.3 : 1}"></div>
+                        <div class="bar-label">Нед ${w + 1}</div>
+                    `;
+                    container.appendChild(col);
+                }
             }
-            
-            const height = Math.min(100, Math.max(10, weekTasks * 4));
-            
-            let color = 'red';
-            if (weekTasks >= 15) color = 'yellow';
-            if (weekTasks >= 25) color = 'green';
-            
-            const col = document.createElement('div');
-            col.className = 'bar-col';
-            col.innerHTML = `
-                <div class="bar ${color}" style="height: ${height}%"></div>
-                <div class="bar-label">Нед ${w + 1}</div>
-            `;
-            container.appendChild(col);
         }
-    }
-}
 
         // --- NAVIGATION ---
         function switchTab(id) {
