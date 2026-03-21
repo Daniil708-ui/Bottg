@@ -1129,71 +1129,88 @@
         }
 
         // --- ANALYTICS ---
-        function getWeekNumber(date) {
-            const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
-            const dayNum = d.getUTCDay() || 7;
-            d.setUTCDate(d.getUTCDate() + 4 - dayNum);
-            const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
-            return Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
-        }
+function getWeekNumber(date) {
+    const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+    const dayNum = d.getUTCDay() || 7;
+    d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+    const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+    return Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+}
 
-        function renderChart(period) {
-            const container = document.getElementById(`chart-${period}`);
-            container.innerHTML = '';
+function getDaysInMonth(year, month) {
+    return new Date(year, month + 1, 0).getDate();
+}
+
+function renderChart(period) {
+    const container = document.getElementById(`chart-${period}`);
+    container.innerHTML = '';
+    
+    const today = new Date();
+    
+    if (period === 'week') {
+        // НЕДЕЛЯ: Пн-Вс текущей календарной недели
+        const currentDay = today.getDay() || 7;
+        const startOfWeek = new Date(today);
+        startOfWeek.setDate(today.getDate() - currentDay + 1);
+        startOfWeek.setHours(0, 0, 0, 0);
+        
+        for (let i = 0; i < 7; i++) {
+            const dayDate = new Date(startOfWeek);
+            dayDate.setDate(startOfWeek.getDate() + i);
+            const dateStr = dayDate.toISOString().split('T')[0];
             
-            const today = new Date();
+            const completedCount = appData.history[dateStr] || 0;
+            const height = Math.min(100, Math.max(10, completedCount * 20));
             
-            if (period === 'week') {
-                const startOfWeek = new Date(today);
-                startOfWeek.setDate(today.getDate() - today.getDay() + 1);
-                startOfWeek.setHours(0, 0, 0, 0);
-                
-                for (let i = 0; i < 7; i++) {
-                    const dayDate = new Date(startOfWeek);
-                    dayDate.setDate(startOfWeek.getDate() + i);
-                    const dateStr = dayDate.toISOString().split('T')[0];
-                    
-                    const completedCount = appData.history[dateStr] || 0;
-                    const height = Math.min(100, Math.max(10, completedCount * 20));
-                    
-                    let color = 'red';
-                    if (completedCount >= 3) color = 'yellow';
-                    if (completedCount >= 5) color = 'green';
-                    
-                    const col = document.createElement('div');
-                    col.className = 'bar-col';
-                    col.innerHTML = `
-                        <div class="bar ${color}" style="height: ${height}%"></div>
-                        <div class="bar-label">${daysShort[i]}</div>
-                    `;
-                    container.appendChild(col);
-                }
-                
-            } else if (period === 'month') {
-                const currentWeek = getWeekNumber(today);
-                
-                for (let i = 0; i < 4; i++) {
-                    const weekNum = currentWeek - 3 + i;
-                    const weekTasks = Object.entries(appData.history)
-                        .filter(([date]) => getWeekNumber(new Date(date)) === weekNum)
-                        .reduce((sum, [, count]) => sum + count, 0);
-                    
-                    const height = Math.min(100, Math.max(10, weekTasks * 5));
-                    
-                    let color = 'red';
-                    if (weekTasks >= 10) color = 'yellow';
-                    if (weekTasks >= 20) color = 'green';
-                    
-                    const col = document.createElement('div');
-                    col.className = 'bar-col';
-                    col.innerHTML = `
-                        <div class="bar ${color}" style="height: ${height}%"></div>
-                        <div class="bar-label">Нед ${i + 1}</div>
-                    `;
-                    container.appendChild(col);
-                }
-            }
+            let color = 'red';
+            if (completedCount >= 3) color = 'yellow';
+            if (completedCount >= 5) color = 'green';
+            
+            const col = document.createElement('div');
+            col.className = 'bar-col';
+            col.innerHTML = `
+                <div class="bar ${color}" style="height: ${height}%"></div>
+                <div class="bar-label">${daysShort[i]}</div>
+            `;
+            container.appendChild(col);
         }
+        
+    } else if (period === 'month') {
+        // МЕСЯЦ: Дни с 1-го числа до сегодня
+        const year = today.getFullYear();
+        const month = today.getMonth();
+        const daysInMonth = getDaysInMonth(year, month);
+        const currentDay = today.getDate();
+        
+        const displayDays = Math.min(currentDay, 10);
+        const step = Math.ceil(currentDay / 10);
+        
+        for (let i = 0; i < displayDays; i++) {
+            const dayNum = (i * step) + 1;
+            if (dayNum > currentDay) break;
+            
+            let periodTasks = 0;
+            for (let d = dayNum; d < dayNum + step && d <= currentDay; d++) {
+                const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+                periodTasks += appData.history[dateStr] || 0;
+            }
+            
+            const height = Math.min(100, Math.max(10, periodTasks * 3));
+            
+            let color = 'red';
+            if (periodTasks >= 5) color = 'yellow';
+            if (periodTasks >= 10) color = 'green';
+            
+            const col = document.createElement('div');
+            col.className = 'bar-col';
+            col.innerHTML = `
+                <div class="bar ${color}" style="height: ${height}%"></div>
+                <div class="bar-label">${dayNum}</div>
+            `;
+            container.appendChild(col);
+        }
+    }
+}
 
         // --- NAVIGATION ---
         function switchTab(id) {
