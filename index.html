@@ -258,7 +258,7 @@
             border-radius: 6px;
             display: flex; align-items: center; justify-content: center;
             cursor: pointer;
-            opacity: 0; transform: scale(0.8);
+            opacity: 1; transform: scale(1);
             transition: var(--transition);
             margin-left: 8px;
             box-shadow: 0 2px 8px rgba(255, 59, 48, 0.3);
@@ -508,6 +508,28 @@
         }
         .custom-check.done { background: rgba(52, 199, 89, 0.6); border-color: #34c759; }
         .custom-check.done::after { content: '✓'; color: #fff; font-size: 12px; }
+        
+        /* Delete button for custom items (health/workout) */
+        .custom-delete {
+            width: 26px; height: 26px;
+            background: rgba(255, 59, 48, 0.3);
+            border: 1px solid rgba(255, 59, 48, 0.6);
+            border-radius: 6px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+            margin-left: 8px;
+            box-shadow: 0 2px 8px rgba(255, 59, 48, 0.3);
+            transition: var(--transition);
+        }
+        .custom-delete::after { content: '🗑️'; font-size: 12px; filter: brightness(1.2); }
+        .custom-delete:hover {
+            background: rgba(255, 59, 48, 0.5);
+            box-shadow: 0 4px 12px rgba(255, 59, 48, 0.5);
+        }
+        .custom-delete:active {
+            background: rgba(255, 59, 48, 0.7);
+            transform: scale(0.9);
+        }
 
         .progress-card {
             background: rgba(255,255,255,0.1);
@@ -1022,7 +1044,7 @@
                 div.innerHTML = `
                     <div class="week-task-header">
                         <span class="week-task-text">${task.emoji} ${task.text}</span>
-                        <div class="week-task-delete" onclick="deleteWeekTask(${tIndex})" style="display: ${allDone ? 'flex' : 'none'}"></div>
+                        <div class="week-task-delete" onclick="deleteWeekTask(${tIndex})">🗑️</div>
                     </div>
                     ${dotsHtml}
                 `;
@@ -1039,9 +1061,11 @@
 
         function deleteWeekTask(index) {
             tg.HapticFeedback.notificationOccurred('warning');
-            appData.tasks.week.splice(index, 1);
-            saveData();
-            renderWeekTasks();
+            if (confirm('Удалить эту задачу?')) {
+                appData.tasks.week.splice(index, 1);
+                saveData();
+                renderWeekTasks();
+            }
         }
 
         // --- ENERGY ---
@@ -1103,11 +1127,19 @@
             document.getElementById('water-count').innerText = `${appData.water}/8`;
         }
 
-        // --- CUSTOM ITEMS ---
+        // --- CUSTOM ITEMS (HEALTH & WORKOUT) ---
         function addCustomItem(category) {
             const name = prompt('Название пункта:');
             if (name) {
                 appData[category].push({ name, done: false });
+                saveData();
+            }
+        }
+
+        function deleteCustomItem(category, index) {
+            tg.HapticFeedback.notificationOccurred('warning');
+            if (confirm('Удалить этот пункт?')) {
+                appData[category].splice(index, 1);
                 saveData();
             }
         }
@@ -1129,7 +1161,10 @@
                 div.className = 'custom-item';
                 div.innerHTML = `
                     <span>${item.name}</span>
-                    <div class="custom-check ${item.done ? 'done' : ''}" onclick="toggleCustom('${category}', ${i})"></div>
+                    <div style="display:flex;align-items:center;gap:8px;">
+                        <div class="custom-check ${item.done ? 'done' : ''}" onclick="toggleCustom('${category}', ${i})"></div>
+                        <div class="custom-delete" onclick="deleteCustomItem('${category}', ${i})"></div>
+                    </div>
                 `;
                 list.appendChild(div);
             });
